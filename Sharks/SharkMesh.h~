@@ -1,0 +1,50 @@
+#include <vector>
+
+#include "tiny_obj_loader.h"
+
+using namespace std;
+class SharkMesh {
+	public:
+		SharkMesh(){
+		   vertices = map<Vector3f, SharkVertex*, compareVect3>(); 
+		   faces = vector<Quad*>();
+		}
+		~SharkMesh(){}
+		void deleteHeap(); 
+
+		void buildAOBJ(FILE* readFile);   //returns the pointer to the point it read the first b
+
+		SharkVertex *gVertex(Vector3f key){return vertices.find(key)->second;}	
+		map<Vector3f, SharkVertex*, compareVect3>::iterator gVertices(){return vertices.begin();}
+		map<Vector3f, SharkVertex*, compareVect3>::iterator gVerticesEnd(){return vertices.end();}
+		Matrix gSkinMatrix(string name){return skinTransforms.find(name)->second;}
+		Quad* gFace(int index){return faces[index];}
+		vector<Quad*>::iterator gFaceBegin(){return faces.begin();}
+		vector<Quad*>::iterator gFaceEnd(){return faces.end();}
+		map<Vector3f, SharkVertex*,compareVect3>::iterator gVertBegin(){return vertices.begin();}
+		map<Vector3f, SharkVertex*,compareVect3>::iterator gVertEnd(){return vertices.end();}
+
+		int faceSize(){return faces.size();}
+		int vertSize(){return vertices.size();}
+		void pushFace(Quad* f){faces.push_back(f);}
+		bool isTransformReady(){return hasNewTransform;}
+		bool isUpdateApproved(){return newUpdateApproved;}
+		void sNewTransform(bool n){hasNewTransform = n;}
+		void sUpdateApproved(bool n){newUpdateApproved = n;}
+		
+		void restPosition();  //resets transform vertex back to local (rest) pose
+		void linearBlendTransform(Matrix matrix, string boneName);
+		void linearBlendTransform();
+		void setSkinMatrix(string bName, Matrix rix){skinTransforms.insert(pair<string, Matrix>(bName, rix));}
+      void insertVec (pair< Vector3f, SharkVertex*> u ){vertices.insert(u);}
+      void countWeights();  //prints out combined weights of all the vertices
+      string nextToken(char delimit, FILE* readFile);
+		
+		map<Vector3f, SharkVertex*, compareVect3> vertices;
+		map<string, Matrix> skinTransforms;
+		vector<Quad*> faces;
+		bool hasNewTransform;
+		bool newUpdateApproved;
+};
+
+#endif

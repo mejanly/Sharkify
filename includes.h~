@@ -1,0 +1,31 @@
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <stdio.h>
+
+#include "SharkMesh.h"
+#include "Vector.h"
+#include "tiny_obj_loader.h"
+#include "GLSL.h"
+#include "RenderingHelper.h"
+
+GLFWwindow* window;
+int g_width = 1024;
+int g_height = 768;
+
+SharkMesh *sharkMesh;
+
+GLuint ShadeProg;
+//RenderingHelper ModelTrans;
+GLuint posBufObj;
+GLuint norBufObj;
+GLuint indBufObj;
+/*
+GLint h_aPosition;
+GLint h_aNormal;
+GLint h_uModelMatrix;
+GLint h_uViewMatrix;
+GLint h_uProjMatrix;
+GLint h_uLightPos;
+GLint h_uMatAmb, h_uMatDif, h_uMatSpec;
+GLint h_uMatShine;
+GLint h_uLightInts;*/

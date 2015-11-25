@@ -1,0 +1,4 @@
+SharkMesh:
+   buildAOBJ:
+      get vertices, put into shark vertices as local and normal vectors
+      
