@@ -18,3 +18,5 @@ GLuint ShadeProg;
 GLuint posBufObj;
 GLuint norBufObj;
 GLuint indBufObj;
+
+bool drawSkin;

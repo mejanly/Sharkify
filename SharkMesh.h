@@ -29,9 +29,11 @@ class SharkMesh {
       void resizeObj(std::vector<tinyobj::shape_t> &shapes);
       void loadShapes(const string &objFile);
       void setShaderVariables(GLuint ShadeProg);
+      void drawSkeleton(GLuint ShadeProg);
       void draw(GLuint posBufObj, GLuint norBufObj, GLuint indBufObj, GLuint ShadeProg);
       vector<float> computeNormals(vector<float> posBuf, vector<unsigned int> indBuf);
       void updateZoom(float amount);
+      void updateYRot(float amount);
       void initSkeleton();
       
    private:
@@ -53,6 +55,7 @@ class SharkMesh {
       int winWidth;
       int winHeight;
       float zoom;
+      float yRot;
       glm::vec3 g_light;
       
       void SetProjectionMatrix();

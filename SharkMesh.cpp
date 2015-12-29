@@ -4,6 +4,7 @@ SharkMesh::SharkMesh(int _winWidth, int _winHeight) {
    winWidth = _winWidth; 
    winHeight = _winHeight; 
 	zoom = -2.5; 
+	yRot = 0;
 	g_light = glm::vec3(-5, 8, 0);
    initSkeleton();
 }
@@ -148,6 +149,10 @@ void SharkMesh::updateZoom(float amount) {
    zoom += amount;
 }
 
+void SharkMesh::updateYRot(float amount) {
+   yRot += amount;
+}
+
 void SharkMesh::setShaderVariables(GLuint ShadeProg) {
    h_aPosition = GLSL::getAttribLocation(ShadeProg, "aPosition");
    h_aNormal = GLSL::getAttribLocation(ShadeProg, "aNormal");
@@ -165,6 +170,54 @@ void SharkMesh::setShaderVariables(GLuint ShadeProg) {
 void SharkMesh::safe_glUniformMatrix4fv(const GLint handle, const GLfloat data[]) {
   if (handle >= 0)
     glUniformMatrix4fv(handle, 1, GL_FALSE, data);
+}
+
+void SharkMesh::drawSkeleton(GLuint ShadeProg) {
+   typedef map<string, SharkBone*> BoneMap;
+   BoneMap boneMap = skeleton->gBones();
+
+   // Clear the screen
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+   // Use our GLSL program
+   glUseProgram(ShadeProg);
+   SetProjectionMatrix();
+   ModelTrans.useModelViewMatrix();
+
+   // Set color of shark
+   glUniform3f(h_uLightPos, g_light.x, g_light.y, g_light.z);
+   glUniform3f(h_uMatAmb, 0.08, 0.03, 0.1);
+   glUniform3f(h_uMatDif, 0.55, 0.51, 0.51);
+   glUniform3f(h_uMatSpec, 1.0, 0.9, 0.6);
+   glUniform1f(h_uMatShine, 2.0);
+   glUniform1f(h_uLightInts, LIGHT_INTS);
+   
+   // Set/send ModelView
+   ModelTrans.loadIdentity();
+   ModelTrans.translate(glm::vec3(0, 0, zoom-3));
+	ModelTrans.rotate(yRot, glm::vec3(0, 1, 0));
+	ModelTrans.translate(glm::vec3(1, 0, 0));
+	
+	safe_glUniformMatrix4fv(h_uModelMatrix, glm::value_ptr(ModelTrans.modelViewMatrix));
+
+   glLineWidth(2.5); 
+   glBegin(GL_LINES);
+      
+   for(BoneMap::const_iterator it = boneMap.begin(); it != boneMap.end(); ++it) {
+      string name = it->first;
+      SharkBone *bone = it->second;
+
+      glm::vec3 head = bone->headPoint;
+      glm::vec3 tail = bone->tailPoint;
+      
+      glVertex3f(head.x, head.y, head.z);
+      glVertex3f(tail.x, tail.y, tail.z);
+
+   }
+   glEnd();
+
+   
+   glUseProgram(0);
 }
 
 void SharkMesh::draw(GLuint posBufObj, GLuint norBufObj, GLuint indBufObj, GLuint ShadeProg)

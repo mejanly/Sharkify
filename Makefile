@@ -24,8 +24,8 @@ tiny_obj_loader.o: tiny_obj_loader.cc tiny_obj_loader.h
 SharkMesh.o: SharkMesh.cpp SharkMesh.h
 	$(CC) $(CFLAGS) -c SharkMesh.cpp
 
-SharkBone.o: SharkBone.cpp SharkBone.h
-	$(CC) $(CFLAGS) -c SharkBone.cpp
-
 SharkSkeleton.o: SharkSkeleton.cpp SharkSkeleton.h
 	$(CC) $(CFLAGS) -c SharkSkeleton.cpp
+
+SharkBone.o: SharkBone.cpp SharkBone.h
+	$(CC) $(CFLAGS) -c SharkBone.cpp

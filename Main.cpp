@@ -17,6 +17,7 @@ int printOglError (const char *file, int line) {
 void initialize() {
    sharkMesh = new SharkMesh(g_width, g_height);
    sharkMesh->loadShapes("Model/LeopardShark.aobj");
+   drawSkin = true;
    
    // Set the background color
    glClearColor(0.0f, 0.1f, 0.5f, 1.0f);
@@ -120,6 +121,17 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	// Zoom out
 	if (key == GLFW_KEY_S && action == GLFW_PRESS)
 	  sharkMesh->updateZoom(-.1);
+	if (key == GLFW_KEY_A && action == GLFW_PRESS)
+	   sharkMesh->updateYRot(3);
+	if (key == GLFW_KEY_D && action == GLFW_PRESS)
+	   sharkMesh->updateYRot(-3);
+	// Toggle FLESH
+	if (key == GLFW_KEY_P && action == GLFW_PRESS) {
+	   if (drawSkin) 
+   	   drawSkin = false;
+   	else
+   	   drawSkin = true;
+   }
 }
 
 int main(int argc, char **argv)
@@ -162,7 +174,10 @@ int main(int argc, char **argv)
    glClearColor(0.0f, 0.1f, 0.5f, 1.0f);
 
    do{
-      sharkMesh->draw(posBufObj, norBufObj, indBufObj, ShadeProg);
+      if (drawSkin)
+         sharkMesh->draw(posBufObj, norBufObj, indBufObj, ShadeProg);
+      else
+         sharkMesh->drawSkeleton(ShadeProg);
       // Swap buffers
       glfwSwapBuffers(window);
       glfwPollEvents();

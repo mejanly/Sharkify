@@ -1,4 +1,76 @@
-SharkMesh:
-   buildAOBJ:
-      get vertices, put into shark vertices as local and normal vectors
+ROTATE THE BONES (consider buildTranslation in SharkBone of Sharkify/Sharkify)
+
+
+
+The confusing part is probably the skinning. And maybe the transforms. How
+	do you transform just the bone and make the mesh follow?
+		Maybe you get the vertex/normal FROM the transforms and the location
+			of the bone... The smaller tutorial seems to maybe possibly from
+			my shitty grisp of it be saying that. Like that whole glVertex thing, what
+			the heck is up with that, man? You just...generate a vertex? Do you
+			keep it in a vertex buffer object or something? Do you just populate
+			it with all the vertices, which you save? You have to recalculate 
+			all the vertices for each frame of movement? Yikes.
+
+Local transform
+   The local transform is responsible for rotating B in bone space
+      about its joint (Figure 2a), and also for offsetting (translating) B relative to its immediate
+      parent such that B’s joint will connect with its parent bone (Figure 2b).
+   The local transform of a bone offsets a bone relative to its parent
+
+Combined transform
+   In contrast to the local transform, the combined transform is responsible for
+      actually posing the bone relative to the character in order to construct the character’s
+      skeleton, as Figure 3 shows. In other words, the combined transform transforms a bone
+      from bone space to the character space. Therefore, it follows that the combined
+      transform is the transform that is used to actually positions and shapes the skin in
+      character space. 
       
+A bone's combined transform is
+   determined by first applying its local transform (rotation followed by translation), then by
+   applying the local transform of its parent P’ (note: P?), then by applying the local transform of its
+   grandparent P’, ..., and finally by applying the local transform of its eldest parent P(n)
+   (the root). 
+   
+Bone Struct:
+   Name
+   transform matrix
+   sibling
+   first child
+   combined transform?
+
+We never interpolate matrices because matrix rotations do not interpolate
+   correctly—we must use quaternions to interpolate rotations correctly. Therefore,
+   keyframe transformation data is usually always stored by a rotation quaternion, scaling
+   vector, and translation vector (RST-values), and not as a matrix. After interpolating the
+   RST-values (i.e., interpolating rotation quaternions, scaling vectors, and translation
+   vectors) for all bones, we can proceed to build the bone-matrix for each bone out of the
+   interpolated RST-values. Lastly, in the case a file format does present keyframe data as a
+   matrix, we must decompose the matrix into RST-values in order to perform the
+   interpolation. 
+   
+The position of the vertices near the joint are determined by a weighted average of the
+   two influential bone transformations.
+
+In vertex blending, we define the character’s skin as one continuous mesh in
+   character space. Consequently, because the vertices are not in bone space, we cannot
+   simply use the combined transforms of the bones.
+To solve this, we introduce a new transform called the offset transform. Each
+   bone in the skeleton has a corresponding offset matrix. An offset matrix transforms
+   vertices, in the bind pose, from bind space to the space of the respective bone. 
+   
+Thus, by transforming the vertices by the offset matrix of some bone B, we move
+   the vertices to the bone space of B. But once we have the vertices in bone space of B we
+   can use B’s combined transform to position it back in character space in its current
+   animated pose! So we now introduce a new transform, call it the final transform, which
+   combines a bone’s offset transform with its combined transform. 
+   F = MC (M is the offset matrix and C is the combined matrix)
+   
+Then the final position v′of any vertex v can be calculated with: (Page 14 eq near top)
+
+
+----
+
+
+Any new animated transformation on the bone has to be multiplied by the inverse of the bindpose matrix
+

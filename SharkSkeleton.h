@@ -5,6 +5,7 @@
 #include <string>
 #include <stdio.h>
 #include <ostream>
+#include <GL/glew.h>
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp" //perspective, trans etc
 #include "glm/gtc/type_ptr.hpp" //value_ptr
@@ -20,6 +21,7 @@ class SharkSkeleton
 		~SharkSkeleton(){}
 		
 		void buildSkeleton(string filename);
+		map<string, SharkBone*> gBones() {return bones;}
 		
    private:
       map<string, SharkBone*> bones; //List of Bones in the shark

@@ -76,7 +76,7 @@ void SharkSkeleton::buildSkeleton(string filename) {
 				tailr.z = atof(nextToken(' ', readFile).c_str());
 			
 			   // create bone
-				SharkBone *bone = new SharkBone(index);
+            SharkBone *bone = new SharkBone(index);
 				bone->buildBone(bName, headr, tailr);
 				sBone(bone);
 
@@ -114,12 +114,15 @@ void SharkSkeleton::buildSkeleton(string filename) {
 		for(int j = 1; j < boneRelationships[i].size(); j++) {
 		   // first bone of i is the parent, add the jth bone as a child
 		   child = gBone(boneRelationships[i][j]);	
-			
 			parent->addChild(child);	
 	   }
-	   parent->buildTranslation();
+	   if (strcmp(parent->gName().c_str(), "Spine4") == 0) {
+	      parent->buildTranslation(glm::vec3(0, 1, 0), 90);
+	   }
 	}
-	bones[rootNode]->buildTranslation();
-	///nmesh->countWeights(); // TODO maybe don't need this...doesn't seem to be in old files
 	fclose(readFile);
 }
+
+if (strcmp(name.c_str(), "Spine4") == 0) {
+         bone->buildTranslation(glm::vec3(0, 1, 0), 90);
+      }
