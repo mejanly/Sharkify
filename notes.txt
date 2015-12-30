@@ -1,17 +1,51 @@
-Possibly... Have a Rendering Helper for each bone segment thing (with the
-   skin) and do the transforms on that RH... But then how do the bone weights
-   come in?? Aaaa
+Need to implement SharkVertex
+   1. Each vertex from the aobj has a SharkVertex
+   2. The shark vertex has the coords probably and a vector of the bone weights
+   3. For each bone weight, transform the vertex coords by the bone weight matrix
+   4. Apparently this is all done by push/popping matrices from ONE Rendering Helper
+   5. Do it, squid
 
 
-The confusing part is probably the skinning. And maybe the transforms. How
-	do you transform just the bone and make the mesh follow?
-		Maybe you get the vertex/normal FROM the transforms and the location
-			of the bone... The smaller tutorial seems to maybe possibly from
-			my shitty grisp of it be saying that. Like that whole glVertex thing, what
-			the heck is up with that, man? You just...generate a vertex? Do you
-			keep it in a vertex buffer object or something? Do you just populate
-			it with all the vertices, which you save? You have to recalculate 
-			all the vertices for each frame of movement? Yikes.
+According to sensei: 
+   ONE Rendering Helper for the entire model composed of other matrices
+      multiplied together
+   But only one matrix is used at a time...
+   (See below)
+   
+1) you shouldn’t need a render helper for each segment
+2) each vertex is just transformed by one matrix - that matrix will be a 
+   composite of multiple matrices multiplied together (which will be different 
+   for each vertex but at any given time you only need one matrix - so one 
+   matrix stack for the whole model should be enough) - perhaps think about it as
+      a) before each animation frame
+      b) for each vertex:
+         create its composite matrix (which will be summing the weighted transform matrices for all bones)
+         transform that vertex by that matrix
+   
+You can think of it that each vertex does have a different matrix
+
+But you only need the matrix while you are transforming that vertex, so yes you can for example make the matrix for Frame0 for vertex0, multiple by it and then throw it away (and yes using push and pop)
+
+Now, in terms of making the matrix for a given Vertex, lets say vertex_10 should be transformed by 1/2 the matrix in bone2 and 1/2 the matrix in bone3
+prior to drawing vertex_10, say for frame 20, you need to look up the matrix for bone2 and bone3 at frame 20 and sum them together each weighted by 1/2 and then draw the transformed vertex.
+
+Thus for each vertex you do need to know what the weights are for every bone
+And for each bone you do need an array (collection) of transform matrices for every frame)
+   
+   
+NO-- 
+   1. Load all skin vertices into a bone-controlled matrix...
+   2. For each bone, have a Rendering Helper for the combTrans
+         combTrans responsible for posing the bone relative
+            to the character...
+         Not sure what the localTrans should be yet...
+            To quote below, "responsible for rotating
+               the bone in bone space"
+   3. Apply transforms to the combTrans (maybe also the local trans)
+   4. Draw vertices for each bone based on the RH
+
+   5. Somehow....bone weights
+
 
 Local transform
    The local transform is responsible for rotating B in bone space
