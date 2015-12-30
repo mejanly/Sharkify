@@ -1,3 +1,11 @@
+Need to implement SharkVertex
+   1. Each vertex from the aobj has a SharkVertex
+   2. The shark vertex has the coords probably and a vector of the bone weights
+   3. For each bone weight, transform the vertex coords by the bone weight matrix
+   4. Apparently this is all done by push/popping matrices from ONE Rendering Helper
+   5. Do it, squid
+
+
 According to sensei: 
    ONE Rendering Helper for the entire model composed of other matrices
       multiplied together
@@ -14,7 +22,15 @@ According to sensei:
          create its composite matrix (which will be summing the weighted transform matrices for all bones)
          transform that vertex by that matrix
    
-   
+You can think of it that each vertex does have a different matrix
+
+But you only need the matrix while you are transforming that vertex, so yes you can for example make the matrix for Frame0 for vertex0, multiple by it and then throw it away (and yes using push and pop)
+
+Now, in terms of making the matrix for a given Vertex, lets say vertex_10 should be transformed by 1/2 the matrix in bone2 and 1/2 the matrix in bone3
+prior to drawing vertex_10, say for frame 20, you need to look up the matrix for bone2 and bone3 at frame 20 and sum them together each weighted by 1/2 and then draw the transformed vertex.
+
+Thus for each vertex you do need to know what the weights are for every bone
+And for each bone you do need an array (collection) of transform matrices for every frame)
    
    
 NO-- 

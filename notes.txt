@@ -4,6 +4,8 @@ Need to implement SharkVertex
    3. For each bone weight, transform the vertex coords by the bone weight matrix
    4. Apparently this is all done by push/popping matrices from ONE Rendering Helper
    5. Do it, squid
+   
+***BONE WEIGHTS: Would the number of bone weights just be... 1/#bones?
 
 
 According to sensei: 
