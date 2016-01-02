@@ -51,6 +51,7 @@ class SharkMesh {
       GLint h_uMatShine;
       GLint h_uLightInts;
       SharkSkeleton *skeleton;
+      //Keyframe *keyframes;
       
       int winWidth;
       int winHeight;

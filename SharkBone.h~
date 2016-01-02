@@ -28,8 +28,8 @@ class SharkBone
 		void buildBone(string bName, glm::vec3 headpt, glm::vec3 tailpt);
 		void addChild(SharkBone *ch) {childBones.push_back(ch);}
 		string gName() {return boneName;}
-		void buildTranslation(glm::vec3 dir, float rot);
-		RenderingHelper getCombTrans() {return combTrans;}
+		//void buildTranslation();
+		RenderingHelper *getCombTrans() {return &combTrans;}
 		
 	private:
 	   int boneNum;

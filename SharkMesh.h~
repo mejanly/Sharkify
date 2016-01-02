@@ -33,6 +33,7 @@ class SharkMesh {
       void draw(GLuint posBufObj, GLuint norBufObj, GLuint indBufObj, GLuint ShadeProg);
       vector<float> computeNormals(vector<float> posBuf, vector<unsigned int> indBuf);
       void updateZoom(float amount);
+      void updateYRot(float amount);
       void initSkeleton();
       
    private:
@@ -50,6 +51,7 @@ class SharkMesh {
       GLint h_uMatShine;
       GLint h_uLightInts;
       SharkSkeleton *skeleton;
+      Keyframe *keyframes;
       
       int winWidth;
       int winHeight;

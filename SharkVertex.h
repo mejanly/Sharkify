@@ -29,7 +29,6 @@ class SharkVertex
 		void sBonePair(string boneName, float boneWeight){sBonePair(pair<string, float>(boneName, boneWeight));}
 		float checkBone(string boneName);
 
-	//private:
 		glm::vec3 local;    
 		glm::vec3 transformed;  //vertex after transformation
 		glm::vec3 normal;

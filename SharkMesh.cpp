@@ -195,12 +195,13 @@ void SharkMesh::drawSkeleton(GLuint ShadeProg) {
    // Set/send ModelView
    ModelTrans.loadIdentity();
    ModelTrans.translate(glm::vec3(0, 0, zoom-3));
-	ModelTrans.rotate(yRot, glm::vec3(0, 1, 0));
+	ModelTrans.rotate(yRot, glm::vec3(0, 1, 0)); // line of interest
 	ModelTrans.translate(glm::vec3(1, 0, 0));
 	
-	safe_glUniformMatrix4fv(h_uModelMatrix, glm::value_ptr(ModelTrans.modelViewMatrix));
-
-   glLineWidth(2.5); 
+	//keyframes = new Keyframe(skeleton->gBones(), &ModelTrans);
+	//keyframes->setFrames("Spine4", glm::vec3(0, 1, 0), 90.0);
+	
+	glLineWidth(2.5); 
    glBegin(GL_LINES);
       
    for(BoneMap::const_iterator it = boneMap.begin(); it != boneMap.end(); ++it) {
@@ -209,11 +210,13 @@ void SharkMesh::drawSkeleton(GLuint ShadeProg) {
 
       glm::vec3 head = bone->headPoint;
       glm::vec3 tail = bone->tailPoint;
+
+      safe_glUniformMatrix4fv(h_uModelMatrix, glm::value_ptr(ModelTrans.modelViewMatrix));
       
       glVertex3f(head.x, head.y, head.z);
       glVertex3f(tail.x, tail.y, tail.z);
-
    }
+
    glEnd();
 
    

@@ -1,52 +1,65 @@
-Need to implement SharkVertex
-   1. Each vertex from the aobj has a SharkVertex
-   2. The shark vertex has the coords probably and a vector of the bone weights
-   3. For each bone weight, transform the vertex coords by the bone weight matrix
-   4. Apparently this is all done by push/popping matrices from ONE Rendering Helper
-   5. Do it, squid
+THE FIRST ORDER OF BUSINESS: Traverse the tree better? Like, start at
+   the root maybe and then go to the children, then its children...
+   Need recursion
+
+Move to right location, push, transform, draw, pop
+
+
+  
+So...the local transform just positions the bone, and the combined transform
+   rotates (or transforms, w/e) it. 
+The local transform is a vector and a matrix right now... 
+The combined transform is just a matrix (rendering helper...a separate one from 
+   the one that draws the skin...will need to fix this). 
+The local matrix is transformed by the boneVec which is determined by the head and 
+   tail points. I was using her equation, which I don't understand, so maybe I 
+   should stop, but also the local transform is technically not doing anything at
+   the moment so maybe it's fine.
+THE ONLY THING DETERMINING THE POSITION OF THE BONES RIGHT NOW is the head and 
+   tail points.
+
+Maybe need to think of a new way to set up the bone matrices...
+
+OKAY: It is possible to rotate THE ENTIRE BONE SETUP by modifying the Rendering
+   Helper in SharkMesh->drawSkeleton... This implies that if I set up a Keyframe
+   System and actually modify the bone matrices, push/pop them from the Rendering
+   Helper matrix stack, then draw each individual bone, the bones will move as I 
+   want them to.
    
-***BONE WEIGHTS: Would the number of bone weights just be... 1/#bones?
-
-
-According to sensei: 
-   ONE Rendering Helper for the entire model composed of other matrices
-      multiplied together
-   But only one matrix is used at a time...
-   (See below)
-   
-1) you shouldn’t need a render helper for each segment
-2) each vertex is just transformed by one matrix - that matrix will be a 
-   composite of multiple matrices multiplied together (which will be different 
-   for each vertex but at any given time you only need one matrix - so one 
-   matrix stack for the whole model should be enough) - perhaps think about it as
-      a) before each animation frame
-      b) for each vertex:
-         create its composite matrix (which will be summing the weighted transform matrices for all bones)
-         transform that vertex by that matrix
-   
-You can think of it that each vertex does have a different matrix
-
-But you only need the matrix while you are transforming that vertex, so yes you can for example make the matrix for Frame0 for vertex0, multiple by it and then throw it away (and yes using push and pop)
-
-Now, in terms of making the matrix for a given Vertex, lets say vertex_10 should be transformed by 1/2 the matrix in bone2 and 1/2 the matrix in bone3
-prior to drawing vertex_10, say for frame 20, you need to look up the matrix for bone2 and bone3 at frame 20 and sum them together each weighted by 1/2 and then draw the transformed vertex.
-
-Thus for each vertex you do need to know what the weights are for every bone
-And for each bone you do need an array (collection) of transform matrices for every frame)
+Involved in this: 
+   I think you would need to order the matrices in a certain way OR be able to
+      look up which one should go next, since the matrices are pushing/popping
+   But since the bones all have parents/children, maybe it's just a matter of
+      pushing/popping the parents/children in the right way...
+   So like, modify a matrix, then modify and push the child matrices??
+   Have a vector of all childbones...so per bone, modify the matrix......
+   The point of the tree might not be to reduce the number of transforms needed
+      per bone, but to have an easier way to access each transform... ??
    
    
-NO-- 
-   1. Load all skin vertices into a bone-controlled matrix...
-   2. For each bone, have a Rendering Helper for the combTrans
-         combTrans responsible for posing the bone relative
-            to the character...
-         Not sure what the localTrans should be yet...
-            To quote below, "responsible for rotating
-               the bone in bone space"
-   3. Apply transforms to the combTrans (maybe also the local trans)
-   4. Draw vertices for each bone based on the RH
+   
+   
+   
 
-   5. Somehow....bone weights
+Not sure if the bone weights (next to the vertices on each vertex) are actually
+   being read into some kind of data structure. Need to start creating
+   SharkVertex structures with the bone weights in them. SharkVertex is already
+   (mostly) implemented so I think I just need to...use it. Not sure about
+   the vec3s as the storage type. 
+   
+Anyway... The matrices are supposed to be per vertex, per frame. 
+There is a transform matrix for each bone per frame. To get the one for each
+   vertex per frame, you multiply the applicable bone matrices by the bone
+   weights and (literally) sum them together. So, .5*Spine1 + .5*Spine2,
+   for example.
+The matrices on the RenderingHelper stack have got to be the transform
+   matrices per bone.
+
+
+
+
+
+
 
 
 Local transform
@@ -60,7 +73,7 @@ Combined transform
       actually posing the bone relative to the character in order to construct the character’s
       skeleton, as Figure 3 shows. In other words, the combined transform transforms a bone
       from bone space to the character space. Therefore, it follows that the combined
-      transform is the transform that is used to actually positions and shapes the skin in
+      transform is the transform that is used to actually position and shape the skin in
       character space. 
       
 A bone's combined transform is

@@ -122,7 +122,3 @@ void SharkSkeleton::buildSkeleton(string filename) {
 	}
 	fclose(readFile);
 }
-
-if (strcmp(name.c_str(), "Spine4") == 0) {
-         bone->buildTranslation(glm::vec3(0, 1, 0), 90);
-      }

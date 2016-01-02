@@ -116,9 +116,6 @@ void SharkSkeleton::buildSkeleton(string filename) {
 		   child = gBone(boneRelationships[i][j]);	
 			parent->addChild(child);	
 	   }
-	   if (strcmp(parent->gName().c_str(), "Spine4") == 0) {
-	      parent->buildTranslation(glm::vec3(0, 1, 0), 90);
-	   }
 	}
 	fclose(readFile);
 }
