@@ -181,8 +181,10 @@ void SharkMesh::drawSkeleton(GLuint ShadeProg) {
 
    // Use our GLSL program
    glUseProgram(ShadeProg);
+   
    SetProjectionMatrix();
-   ModelTrans.useModelViewMatrix();
+   keyframes = new Keyframe(h_uModelMatrix);
+   /*ModelTrans.useModelViewMatrix();
 
    // Set color of shark
    glUniform3f(h_uLightPos, g_light.x, g_light.y, g_light.z);
@@ -198,23 +200,27 @@ void SharkMesh::drawSkeleton(GLuint ShadeProg) {
 	ModelTrans.rotate(yRot, glm::vec3(0, 1, 0)); // line of interest
 	ModelTrans.translate(glm::vec3(1, 0, 0));
 	
-	//keyframes = new Keyframe(skeleton->gBones(), &ModelTrans);
-	//keyframes->setFrames("Spine4", glm::vec3(0, 1, 0), 90.0);
-	
 	glLineWidth(2.5); 
-   glBegin(GL_LINES);
+   glBegin(GL_LINES);*/
       
    for(BoneMap::const_iterator it = boneMap.begin(); it != boneMap.end(); ++it) {
       string name = it->first;
       SharkBone *bone = it->second;
+      
+      if (strcmp(name.c_str(), "Spine5") == 0) {
+         keyframes->setKeyframes(bone, glm::vec3(0, 1, 0), yRot+15);
+      }
+      //else {
+         //keyframes->setKeyframes(bone, glm::vec3(0, 1, 0), yRot);
+      //}
 
-      glm::vec3 head = bone->headPoint;
+      /*glm::vec3 head = bone->headPoint;
       glm::vec3 tail = bone->tailPoint;
 
       safe_glUniformMatrix4fv(h_uModelMatrix, glm::value_ptr(ModelTrans.modelViewMatrix));
       
       glVertex3f(head.x, head.y, head.z);
-      glVertex3f(tail.x, tail.y, tail.z);
+      glVertex3f(tail.x, tail.y, tail.z);*/
    }
 
    glEnd();

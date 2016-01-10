@@ -13,6 +13,7 @@
 #include "GLSL.h"
 
 #include "SharkSkeleton.h"
+#include "Keyframe.h"
 
 #define LIGHT_INTS 0.5
 
@@ -51,7 +52,7 @@ class SharkMesh {
       GLint h_uMatShine;
       GLint h_uLightInts;
       SharkSkeleton *skeleton;
-      Keyframe *keyframes;
+      //Keyframe *keyframes;
       
       int winWidth;
       int winHeight;

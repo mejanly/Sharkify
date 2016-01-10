@@ -1,11 +1,17 @@
-THE FIRST ORDER OF BUSINESS: Traverse the tree better? Like, start at
-   the root maybe and then go to the children, then its children...
-   Need recursion
+THE FIRST ORDER OF BUSINESS: Cannot modify SharkBone... Need to store the
+   translation matrix for each bone in the bone struct. Weh.
+
+So... Things draw like an accordian?
+   Look at SharkMesh (added yRot in so that could be doing stuff).
+   Also made it so the children are modified by the same angle (probable
+      culprit).
+   The culprit is the if/else in SharkMesh->drawSkeleton... I think. Because
+      the child bones fall under the 'else' category.
 
 Move to right location, push, transform, draw, pop
 
 
-  
+
 So...the local transform just positions the bone, and the combined transform
    rotates (or transforms, w/e) it. 
 The local transform is a vector and a matrix right now... 

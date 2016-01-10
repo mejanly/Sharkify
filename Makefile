@@ -1,9 +1,12 @@
 CC=g++
 ROOT_DIR= $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 CFLAGS= -I $(ROOT_DIR) -L $(ROOT_DIR) -g
-SOURCES= Main.o GLSL.o tiny_obj_loader.o RenderingHelper.o SharkMesh.o SharkBone.o SharkSkeleton.o
+SOURCES= Main.o GLSL.o tiny_obj_loader.o RenderingHelper.o SharkMesh.o SharkBone.o Keyframe.o SharkSkeleton.o
 LIBFLAGS= -lm -lGL -lGLEW -lGLU -lglut -lglfw3 -lXmu -lX11 -lXxf86vm -lXrandr -lpthread -lXi libGLEW.a libglfw3.a
- 
+
+clean:
+	rm -f $(SOURCES) *~ TAGS
+
 shark: $(SOURCES)
 	cp libglfw3_x64.a libglfw3.a
 	cp libGLEW_x64.a libGLEW.a
@@ -17,6 +20,9 @@ GLSL.o: GLSL.cpp GLSL.h GLIncludes.h
 
 RenderingHelper.o: RenderingHelper.cpp RenderingHelper.h
 	$(CC) $(CFLAGS) -c RenderingHelper.cpp
+
+Keyframe.o: Keyframe.cpp Keyframe.h
+	$(CC) $(CFLAGS) -c Keyframe.cpp
 
 tiny_obj_loader.o: tiny_obj_loader.cc tiny_obj_loader.h
 	$(CC) $(CFLAGS) -c tiny_obj_loader.cc

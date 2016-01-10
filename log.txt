@@ -1,63 +1,444 @@
-==3904== Memcheck, a memory error detector
-==3904== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==3904== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==3904== Command: ./shark
-==3904== 
-==3904== Conditional jump or move depends on uninitialised value(s)
-==3904==    at 0x4C2E0E9: strlen (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3904==    by 0x64B882D: strdup (strdup.c:41)
-==3904==    by 0x44A6BF: openJoystickDevice (in /home/megan/Documents/sp/0shark/Sharkify/shark)
-==3904==    by 0x44AB23: _glfwInitJoysticks (in /home/megan/Documents/sp/0shark/Sharkify/shark)
-==3904==    by 0x44A55B: _glfwPlatformInit (in /home/megan/Documents/sp/0shark/Sharkify/shark)
-==3904==    by 0x44596C: glfwInit (in /home/megan/Documents/sp/0shark/Sharkify/shark)
-==3904==    by 0x405E09: main (Main.cpp:140)
-==3904== 
-==3904== Conditional jump or move depends on uninitialised value(s)
-==3904==    at 0x4C2E0F8: strlen (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3904==    by 0x64B882D: strdup (strdup.c:41)
-==3904==    by 0x44A6BF: openJoystickDevice (in /home/megan/Documents/sp/0shark/Sharkify/shark)
-==3904==    by 0x44AB23: _glfwInitJoysticks (in /home/megan/Documents/sp/0shark/Sharkify/shark)
-==3904==    by 0x44A55B: _glfwPlatformInit (in /home/megan/Documents/sp/0shark/Sharkify/shark)
-==3904==    by 0x44596C: glfwInit (in /home/megan/Documents/sp/0shark/Sharkify/shark)
-==3904==    by 0x405E09: main (Main.cpp:140)
-==3904== 
-==3904== Conditional jump or move depends on uninitialised value(s)
-==3904==    at 0x420FA6: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:101)
-==3904==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
-==3904==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
-==3904==    by 0x4056D4: initialize() (Main.cpp:18)
-==3904==    by 0x405F7D: main (Main.cpp:171)
-==3904== 
-==3904== 
-==3904== Process terminating with default action of signal 11 (SIGSEGV)
-==3904==  Access not within mapped region at address 0x0
-==3904==    at 0x418C16: glm::detail::tvec4<float>::operator=(glm::detail::tvec4<float> const&) (type_vec4.inl:376)
-==3904==    by 0x418306: glm::detail::tmat4x4<float>::operator=(glm::detail::tmat4x4<float> const&) (type_mat4x4.inl:352)
-==3904==    by 0x417B51: RenderingHelper::loadIdentity() (RenderingHelper.cpp:46)
-==3904==    by 0x41FDA0: SharkBone::SharkBone(int) (SharkBone.cpp:9)
-==3904==    by 0x420DE1: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:79)
-==3904==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
-==3904==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
-==3904==    by 0x4056D4: initialize() (Main.cpp:18)
-==3904==    by 0x405F7D: main (Main.cpp:171)
-==3904==  If you believe this happened as a result of a stack
-==3904==  overflow in your program's main thread (unlikely but
-==3904==  possible), you can try to increase the size of the
-==3904==  main thread stack using the --main-stacksize= flag.
-==3904==  The main thread stack size used in this run was 8388608.
-==3904== 
-==3904== HEAP SUMMARY:
-==3904==     in use at exit: 2,489,537 bytes in 4,345 blocks
-==3904==   total heap usage: 10,207 allocs, 5,862 frees, 4,498,321 bytes allocated
-==3904== 
-==3904== LEAK SUMMARY:
-==3904==    definitely lost: 0 bytes in 0 blocks
-==3904==    indirectly lost: 0 bytes in 0 blocks
-==3904==      possibly lost: 98,515 bytes in 1,223 blocks
-==3904==    still reachable: 2,391,022 bytes in 3,122 blocks
-==3904==         suppressed: 0 bytes in 0 blocks
-==3904== Rerun with --leak-check=full to see details of leaked memory
-==3904== 
-==3904== For counts of detected and suppressed errors, rerun with: -v
-==3904== Use --track-origins=yes to see where uninitialised values come from
-==3904== ERROR SUMMARY: 29 errors from 3 contexts (suppressed: 2 from 2)
+==4125== Memcheck, a memory error detector
+==4125== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==4125== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==4125== Command: ./shark
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x4C2E0E9: strlen (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4125==    by 0x64B882D: strdup (strdup.c:41)
+==4125==    by 0x44B23F: openJoystickDevice (in /home/megan/Documents/sp/0shark/Sharkify/shark)
+==4125==    by 0x44B6A3: _glfwInitJoysticks (in /home/megan/Documents/sp/0shark/Sharkify/shark)
+==4125==    by 0x44B0DB: _glfwPlatformInit (in /home/megan/Documents/sp/0shark/Sharkify/shark)
+==4125==    by 0x4464EC: glfwInit (in /home/megan/Documents/sp/0shark/Sharkify/shark)
+==4125==    by 0x405E09: main (Main.cpp:140)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x4C2E0F8: strlen (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4125==    by 0x64B882D: strdup (strdup.c:41)
+==4125==    by 0x44B23F: openJoystickDevice (in /home/megan/Documents/sp/0shark/Sharkify/shark)
+==4125==    by 0x44B6A3: _glfwInitJoysticks (in /home/megan/Documents/sp/0shark/Sharkify/shark)
+==4125==    by 0x44B0DB: _glfwPlatformInit (in /home/megan/Documents/sp/0shark/Sharkify/shark)
+==4125==    by 0x4464EC: glfwInit (in /home/megan/Documents/sp/0shark/Sharkify/shark)
+==4125==    by 0x405E09: main (Main.cpp:140)
+==4125== 
+==4125== Invalid write of size 4
+==4125==    at 0x41DE07: glm::detail::tvec3<float>::tvec3() (type_vec3.inl:70)
+==4125==    by 0x41C058: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:3)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125==  Address 0xd855360 is 0 bytes after a block of size 464 alloc'd
+==4125==    at 0x4C2B0E0: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4125==    by 0x4056BB: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Invalid write of size 4
+==4125==    at 0x41A7CB: glm::detail::tvec3<float>::operator=(glm::detail::tvec3<float> const&) (type_vec3.inl:239)
+==4125==    by 0x41C0D9: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:8)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125==  Address 0xd855360 is 0 bytes after a block of size 464 alloc'd
+==4125==    at 0x4C2B0E0: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4125==    by 0x4056BB: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x421D06: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:101)
+==4125==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
+==4125==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x422093: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:903)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125==    by 0x421E27: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:117)
+==4125==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
+==4125==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x422524: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:322)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125==    by 0x421E27: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:117)
+==4125==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
+==4125==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x42310E: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_check_len(unsigned long, char const*) const (stl_vector.h:1338)
+==4125==    by 0x4225CE: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:343)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125==    by 0x421E27: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:117)
+==4125==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
+==4125==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x41364B: unsigned long const& std::max<unsigned long>(unsigned long const&, unsigned long const&) (stl_algobase.h:221)
+==4125==    by 0x42314D: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_check_len(unsigned long, char const*) const (stl_vector.h:1341)
+==4125==    by 0x4225CE: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:343)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125==    by 0x421E27: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:117)
+==4125==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
+==4125==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x423168: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_check_len(unsigned long, char const*) const (stl_vector.h:1342)
+==4125==    by 0x4225CE: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:343)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125==    by 0x421E27: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:117)
+==4125==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
+==4125==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x42317A: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_check_len(unsigned long, char const*) const (stl_vector.h:1342)
+==4125==    by 0x4225CE: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:343)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125==    by 0x421E27: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:117)
+==4125==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
+==4125==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x420D2F: std::_Vector_base<SharkBone*, std::allocator<SharkBone*> >::_M_allocate(unsigned long) (in /home/megan/Documents/sp/0shark/Sharkify/shark)
+==4125==    by 0x42260C: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:345)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125==    by 0x421E27: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:117)
+==4125==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
+==4125==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x420E63: __gnu_cxx::new_allocator<SharkBone*>::allocate(unsigned long, void const*) (new_allocator.h:101)
+==4125==    by 0x420D48: std::_Vector_base<SharkBone*, std::allocator<SharkBone*> >::_M_allocate(unsigned long) (in /home/megan/Documents/sp/0shark/Sharkify/shark)
+==4125==    by 0x42260C: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:345)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125==    by 0x421E27: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:117)
+==4125==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
+==4125==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x4C2B08D: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4125==    by 0x420E79: __gnu_cxx::new_allocator<SharkBone*>::allocate(unsigned long, void const*) (new_allocator.h:104)
+==4125==    by 0x420D48: std::_Vector_base<SharkBone*, std::allocator<SharkBone*> >::_M_allocate(unsigned long) (in /home/megan/Documents/sp/0shark/Sharkify/shark)
+==4125==    by 0x42260C: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:345)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125==    by 0x421E27: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:117)
+==4125==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
+==4125==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x423078: __gnu_cxx::new_allocator<SharkBone*>::construct(SharkBone**, SharkBone* const&) (new_allocator.h:130)
+==4125==    by 0x4224F7: void __gnu_cxx::__alloc_traits<std::allocator<SharkBone*> >::construct<SharkBone*>(std::allocator<SharkBone*>&, SharkBone**, SharkBone* const&) (alloc_traits.h:216)
+==4125==    by 0x42263F: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:353)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125==    by 0x421E27: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:117)
+==4125==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
+==4125==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Use of uninitialised value of size 8
+==4125==    at 0x423081: __gnu_cxx::new_allocator<SharkBone*>::construct(SharkBone**, SharkBone* const&) (new_allocator.h:130)
+==4125==    by 0x4224F7: void __gnu_cxx::__alloc_traits<std::allocator<SharkBone*> >::construct<SharkBone*>(std::allocator<SharkBone*>&, SharkBone**, SharkBone* const&) (alloc_traits.h:216)
+==4125==    by 0x42263F: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:353)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125==    by 0x421E27: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:117)
+==4125==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
+==4125==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x421075: SharkBone** std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<SharkBone*>(SharkBone* const*, SharkBone* const*, SharkBone**) (stl_algobase.h:371)
+==4125==    by 0x424F25: SharkBone** std::__copy_move_a<false, SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_algobase.h:390)
+==4125==    by 0x424EED: SharkBone** std::__copy_move_a2<false, SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_algobase.h:428)
+==4125==    by 0x424D4B: SharkBone** std::copy<SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_algobase.h:460)
+==4125==    by 0x424B0B: SharkBone** std::__uninitialized_copy<true>::__uninit_copy<SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_uninitialized.h:93)
+==4125==    by 0x424561: SharkBone** std::uninitialized_copy<SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_uninitialized.h:117)
+==4125==    by 0x423C08: SharkBone** std::__uninitialized_copy_a<SharkBone**, SharkBone**, SharkBone*>(SharkBone**, SharkBone**, SharkBone**, std::allocator<SharkBone*>&) (stl_uninitialized.h:258)
+==4125==    by 0x423207: SharkBone** std::__uninitialized_move_if_noexcept_a<SharkBone**, SharkBone**, std::allocator<SharkBone*> >(SharkBone**, SharkBone**, SharkBone**, std::allocator<SharkBone*>&) (stl_uninitialized.h:281)
+==4125==    by 0x42267B: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:362)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125==    by 0x421E27: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:117)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x41FFB9: std::_Vector_base<SharkBone*, std::allocator<SharkBone*> >::_M_deallocate(SharkBone**, unsigned long) (stl_vector.h:173)
+==4125==    by 0x42271E: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:386)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125==    by 0x421E27: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:117)
+==4125==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
+==4125==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x4C2F45A: memcpy@GLIBC_2.2.5 (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4125==    by 0x421095: SharkBone** std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<SharkBone*>(SharkBone* const*, SharkBone* const*, SharkBone**) (stl_algobase.h:372)
+==4125==    by 0x424F25: SharkBone** std::__copy_move_a<false, SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_algobase.h:390)
+==4125==    by 0x424EED: SharkBone** std::__copy_move_a2<false, SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_algobase.h:428)
+==4125==    by 0x424D4B: SharkBone** std::copy<SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_algobase.h:460)
+==4125==    by 0x424B0B: SharkBone** std::__uninitialized_copy<true>::__uninit_copy<SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_uninitialized.h:93)
+==4125==    by 0x424561: SharkBone** std::uninitialized_copy<SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_uninitialized.h:117)
+==4125==    by 0x423C08: SharkBone** std::__uninitialized_copy_a<SharkBone**, SharkBone**, SharkBone*>(SharkBone**, SharkBone**, SharkBone**, std::allocator<SharkBone*>&) (stl_uninitialized.h:258)
+==4125==    by 0x423207: SharkBone** std::__uninitialized_move_if_noexcept_a<SharkBone**, SharkBone**, std::allocator<SharkBone*> >(SharkBone**, SharkBone**, SharkBone**, std::allocator<SharkBone*>&) (stl_uninitialized.h:281)
+==4125==    by 0x42267B: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:362)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x4C2F48A: memcpy@GLIBC_2.2.5 (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4125==    by 0x421095: SharkBone** std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<SharkBone*>(SharkBone* const*, SharkBone* const*, SharkBone**) (stl_algobase.h:372)
+==4125==    by 0x424F25: SharkBone** std::__copy_move_a<false, SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_algobase.h:390)
+==4125==    by 0x424EED: SharkBone** std::__copy_move_a2<false, SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_algobase.h:428)
+==4125==    by 0x424D4B: SharkBone** std::copy<SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_algobase.h:460)
+==4125==    by 0x424B0B: SharkBone** std::__uninitialized_copy<true>::__uninit_copy<SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_uninitialized.h:93)
+==4125==    by 0x424561: SharkBone** std::uninitialized_copy<SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_uninitialized.h:117)
+==4125==    by 0x423C08: SharkBone** std::__uninitialized_copy_a<SharkBone**, SharkBone**, SharkBone*>(SharkBone**, SharkBone**, SharkBone**, std::allocator<SharkBone*>&) (stl_uninitialized.h:258)
+==4125==    by 0x423207: SharkBone** std::__uninitialized_move_if_noexcept_a<SharkBone**, SharkBone**, std::allocator<SharkBone*> >(SharkBone**, SharkBone**, SharkBone**, std::allocator<SharkBone*>&) (stl_uninitialized.h:281)
+==4125==    by 0x42267B: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:362)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x4C2F5D2: memcpy@GLIBC_2.2.5 (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4125==    by 0x421095: SharkBone** std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<SharkBone*>(SharkBone* const*, SharkBone* const*, SharkBone**) (stl_algobase.h:372)
+==4125==    by 0x424F25: SharkBone** std::__copy_move_a<false, SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_algobase.h:390)
+==4125==    by 0x424EED: SharkBone** std::__copy_move_a2<false, SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_algobase.h:428)
+==4125==    by 0x424D4B: SharkBone** std::copy<SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_algobase.h:460)
+==4125==    by 0x424B0B: SharkBone** std::__uninitialized_copy<true>::__uninit_copy<SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_uninitialized.h:93)
+==4125==    by 0x424561: SharkBone** std::uninitialized_copy<SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_uninitialized.h:117)
+==4125==    by 0x423C08: SharkBone** std::__uninitialized_copy_a<SharkBone**, SharkBone**, SharkBone*>(SharkBone**, SharkBone**, SharkBone**, std::allocator<SharkBone*>&) (stl_uninitialized.h:258)
+==4125==    by 0x423207: SharkBone** std::__uninitialized_move_if_noexcept_a<SharkBone**, SharkBone**, std::allocator<SharkBone*> >(SharkBone**, SharkBone**, SharkBone**, std::allocator<SharkBone*>&) (stl_uninitialized.h:281)
+==4125==    by 0x42267B: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:362)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x4C2F5FE: memcpy@GLIBC_2.2.5 (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4125==    by 0x421095: SharkBone** std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<SharkBone*>(SharkBone* const*, SharkBone* const*, SharkBone**) (stl_algobase.h:372)
+==4125==    by 0x424F25: SharkBone** std::__copy_move_a<false, SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_algobase.h:390)
+==4125==    by 0x424EED: SharkBone** std::__copy_move_a2<false, SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_algobase.h:428)
+==4125==    by 0x424D4B: SharkBone** std::copy<SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_algobase.h:460)
+==4125==    by 0x424B0B: SharkBone** std::__uninitialized_copy<true>::__uninit_copy<SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_uninitialized.h:93)
+==4125==    by 0x424561: SharkBone** std::uninitialized_copy<SharkBone**, SharkBone**>(SharkBone**, SharkBone**, SharkBone**) (stl_uninitialized.h:117)
+==4125==    by 0x423C08: SharkBone** std::__uninitialized_copy_a<SharkBone**, SharkBone**, SharkBone*>(SharkBone**, SharkBone**, SharkBone**, std::allocator<SharkBone*>&) (stl_uninitialized.h:258)
+==4125==    by 0x423207: SharkBone** std::__uninitialized_move_if_noexcept_a<SharkBone**, SharkBone**, std::allocator<SharkBone*> >(SharkBone**, SharkBone**, SharkBone**, std::allocator<SharkBone*>&) (stl_uninitialized.h:281)
+==4125==    by 0x42267B: std::vector<SharkBone*, std::allocator<SharkBone*> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SharkBone**, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone* const&) (vector.tcc:362)
+==4125==    by 0x4220E7: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:913)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x423078: __gnu_cxx::new_allocator<SharkBone*>::construct(SharkBone**, SharkBone* const&) (new_allocator.h:130)
+==4125==    by 0x4224F7: void __gnu_cxx::__alloc_traits<std::allocator<SharkBone*> >::construct<SharkBone*>(std::allocator<SharkBone*>&, SharkBone**, SharkBone* const&) (alloc_traits.h:216)
+==4125==    by 0x4220AF: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:905)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125==    by 0x421E27: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:117)
+==4125==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
+==4125==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Use of uninitialised value of size 8
+==4125==    at 0x423081: __gnu_cxx::new_allocator<SharkBone*>::construct(SharkBone**, SharkBone* const&) (new_allocator.h:130)
+==4125==    by 0x4224F7: void __gnu_cxx::__alloc_traits<std::allocator<SharkBone*> >::construct<SharkBone*>(std::allocator<SharkBone*>&, SharkBone**, SharkBone* const&) (alloc_traits.h:216)
+==4125==    by 0x4220AF: std::vector<SharkBone*, std::allocator<SharkBone*> >::push_back(SharkBone* const&) (stl_vector.h:905)
+==4125==    by 0x42203F: SharkBone::addChild(SharkBone*) (SharkBone.h:29)
+==4125==    by 0x421E27: SharkSkeleton::buildSkeleton(std::string) (SharkSkeleton.cpp:117)
+==4125==    by 0x41C19D: SharkMesh::initSkeleton() (SharkMesh.cpp:14)
+==4125==    by 0x41C0E5: SharkMesh::SharkMesh(int, int) (SharkMesh.cpp:9)
+==4125==    by 0x4056D4: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+just compiled the v shader
+Shader InfoLog:
+
+
+just compiled the f shader
+Shader InfoLog:
+
+
+just linked the shaders
+Program InfoLog:
+
+
+WARN: uViewMatrix cannot be bound (it either doesn't exist or has been optimized away). safe_glUniform calls will silently ignore it.
+
+==4125== Invalid read of size 4
+==4125==    at 0x41D87C: SharkMesh::draw(unsigned int, unsigned int, unsigned int, unsigned int) (SharkMesh.cpp:245)
+==4125==    by 0x406057: main (Main.cpp:178)
+==4125==  Address 0xd855360 is 0 bytes after a block of size 464 alloc'd
+==4125==    at 0x4C2B0E0: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4125==    by 0x4056BB: initialize() (Main.cpp:18)
+==4125==    by 0x405F7D: main (Main.cpp:171)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x420D2F: std::_Vector_base<SharkBone*, std::allocator<SharkBone*> >::_M_allocate(unsigned long) (in /home/megan/Documents/sp/0shark/Sharkify/shark)
+==4125==    by 0x420DBC: std::_Vector_base<SharkBone*, std::allocator<SharkBone*> >::_M_create_storage(unsigned long) (stl_vector.h:181)
+==4125==    by 0x420C3A: std::_Vector_base<SharkBone*, std::allocator<SharkBone*> >::_Vector_base(unsigned long, std::allocator<SharkBone*> const&) (stl_vector.h:136)
+==4125==    by 0x4205F6: std::vector<SharkBone*, std::allocator<SharkBone*> >::vector(std::vector<SharkBone*, std::allocator<SharkBone*> > const&) (stl_vector.h:312)
+==4125==    by 0x4205A3: SharkBone::gBones() (SharkBone.h:31)
+==4125==    by 0x42044D: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:29)
+==4125==    by 0x41D767: SharkMesh::drawSkeleton(unsigned int) (SharkMesh.cpp:211)
+==4125==    by 0x406070: main (Main.cpp:180)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x420E63: __gnu_cxx::new_allocator<SharkBone*>::allocate(unsigned long, void const*) (new_allocator.h:101)
+==4125==    by 0x420D48: std::_Vector_base<SharkBone*, std::allocator<SharkBone*> >::_M_allocate(unsigned long) (in /home/megan/Documents/sp/0shark/Sharkify/shark)
+==4125==    by 0x420DBC: std::_Vector_base<SharkBone*, std::allocator<SharkBone*> >::_M_create_storage(unsigned long) (stl_vector.h:181)
+==4125==    by 0x420C3A: std::_Vector_base<SharkBone*, std::allocator<SharkBone*> >::_Vector_base(unsigned long, std::allocator<SharkBone*> const&) (stl_vector.h:136)
+==4125==    by 0x4205F6: std::vector<SharkBone*, std::allocator<SharkBone*> >::vector(std::vector<SharkBone*, std::allocator<SharkBone*> > const&) (stl_vector.h:312)
+==4125==    by 0x4205A3: SharkBone::gBones() (SharkBone.h:31)
+==4125==    by 0x42044D: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:29)
+==4125==    by 0x41D767: SharkMesh::drawSkeleton(unsigned int) (SharkMesh.cpp:211)
+==4125==    by 0x406070: main (Main.cpp:180)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x4C2B08D: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4125==    by 0x420E79: __gnu_cxx::new_allocator<SharkBone*>::allocate(unsigned long, void const*) (new_allocator.h:104)
+==4125==    by 0x420D48: std::_Vector_base<SharkBone*, std::allocator<SharkBone*> >::_M_allocate(unsigned long) (in /home/megan/Documents/sp/0shark/Sharkify/shark)
+==4125==    by 0x420DBC: std::_Vector_base<SharkBone*, std::allocator<SharkBone*> >::_M_create_storage(unsigned long) (stl_vector.h:181)
+==4125==    by 0x420C3A: std::_Vector_base<SharkBone*, std::allocator<SharkBone*> >::_Vector_base(unsigned long, std::allocator<SharkBone*> const&) (stl_vector.h:136)
+==4125==    by 0x4205F6: std::vector<SharkBone*, std::allocator<SharkBone*> >::vector(std::vector<SharkBone*, std::allocator<SharkBone*> > const&) (stl_vector.h:312)
+==4125==    by 0x4205A3: SharkBone::gBones() (SharkBone.h:31)
+==4125==    by 0x42044D: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:29)
+==4125==    by 0x41D767: SharkMesh::drawSkeleton(unsigned int) (SharkMesh.cpp:211)
+==4125==    by 0x406070: main (Main.cpp:180)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x421075: SharkBone** std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<SharkBone*>(SharkBone* const*, SharkBone* const*, SharkBone**) (stl_algobase.h:371)
+==4125==    by 0x421026: SharkBone** std::__copy_move_a<false, SharkBone* const*, SharkBone**>(SharkBone* const*, SharkBone* const*, SharkBone**) (stl_algobase.h:390)
+==4125==    by 0x420FC6: SharkBone** std::__copy_move_a2<false, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_algobase.h:428)
+==4125==    by 0x420F56: SharkBone** std::copy<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_algobase.h:460)
+==4125==    by 0x420ECB: SharkBone** std::__uninitialized_copy<true>::__uninit_copy<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_uninitialized.h:93)
+==4125==    by 0x420E36: SharkBone** std::uninitialized_copy<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_uninitialized.h:117)
+==4125==    by 0x420CED: SharkBone** std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**, SharkBone*>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**, std::allocator<SharkBone*>&) (stl_uninitialized.h:258)
+==4125==    by 0x420638: std::vector<SharkBone*, std::allocator<SharkBone*> >::vector(std::vector<SharkBone*, std::allocator<SharkBone*> > const&) (stl_vector.h:316)
+==4125==    by 0x4205A3: SharkBone::gBones() (SharkBone.h:31)
+==4125==    by 0x42044D: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:29)
+==4125==    by 0x41D767: SharkMesh::drawSkeleton(unsigned int) (SharkMesh.cpp:211)
+==4125==    by 0x406070: main (Main.cpp:180)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x4C2F45A: memcpy@GLIBC_2.2.5 (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4125==    by 0x421095: SharkBone** std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<SharkBone*>(SharkBone* const*, SharkBone* const*, SharkBone**) (stl_algobase.h:372)
+==4125==    by 0x421026: SharkBone** std::__copy_move_a<false, SharkBone* const*, SharkBone**>(SharkBone* const*, SharkBone* const*, SharkBone**) (stl_algobase.h:390)
+==4125==    by 0x420FC6: SharkBone** std::__copy_move_a2<false, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_algobase.h:428)
+==4125==    by 0x420F56: SharkBone** std::copy<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_algobase.h:460)
+==4125==    by 0x420ECB: SharkBone** std::__uninitialized_copy<true>::__uninit_copy<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_uninitialized.h:93)
+==4125==    by 0x420E36: SharkBone** std::uninitialized_copy<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_uninitialized.h:117)
+==4125==    by 0x420CED: SharkBone** std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**, SharkBone*>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**, std::allocator<SharkBone*>&) (stl_uninitialized.h:258)
+==4125==    by 0x420638: std::vector<SharkBone*, std::allocator<SharkBone*> >::vector(std::vector<SharkBone*, std::allocator<SharkBone*> > const&) (stl_vector.h:316)
+==4125==    by 0x4205A3: SharkBone::gBones() (SharkBone.h:31)
+==4125==    by 0x42044D: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:29)
+==4125==    by 0x41D767: SharkMesh::drawSkeleton(unsigned int) (SharkMesh.cpp:211)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x4C2F48A: memcpy@GLIBC_2.2.5 (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4125==    by 0x421095: SharkBone** std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<SharkBone*>(SharkBone* const*, SharkBone* const*, SharkBone**) (stl_algobase.h:372)
+==4125==    by 0x421026: SharkBone** std::__copy_move_a<false, SharkBone* const*, SharkBone**>(SharkBone* const*, SharkBone* const*, SharkBone**) (stl_algobase.h:390)
+==4125==    by 0x420FC6: SharkBone** std::__copy_move_a2<false, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_algobase.h:428)
+==4125==    by 0x420F56: SharkBone** std::copy<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_algobase.h:460)
+==4125==    by 0x420ECB: SharkBone** std::__uninitialized_copy<true>::__uninit_copy<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_uninitialized.h:93)
+==4125==    by 0x420E36: SharkBone** std::uninitialized_copy<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_uninitialized.h:117)
+==4125==    by 0x420CED: SharkBone** std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**, SharkBone*>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**, std::allocator<SharkBone*>&) (stl_uninitialized.h:258)
+==4125==    by 0x420638: std::vector<SharkBone*, std::allocator<SharkBone*> >::vector(std::vector<SharkBone*, std::allocator<SharkBone*> > const&) (stl_vector.h:316)
+==4125==    by 0x4205A3: SharkBone::gBones() (SharkBone.h:31)
+==4125==    by 0x42044D: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:29)
+==4125==    by 0x41D767: SharkMesh::drawSkeleton(unsigned int) (SharkMesh.cpp:211)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x4C2F5D2: memcpy@GLIBC_2.2.5 (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4125==    by 0x421095: SharkBone** std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<SharkBone*>(SharkBone* const*, SharkBone* const*, SharkBone**) (stl_algobase.h:372)
+==4125==    by 0x421026: SharkBone** std::__copy_move_a<false, SharkBone* const*, SharkBone**>(SharkBone* const*, SharkBone* const*, SharkBone**) (stl_algobase.h:390)
+==4125==    by 0x420FC6: SharkBone** std::__copy_move_a2<false, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_algobase.h:428)
+==4125==    by 0x420F56: SharkBone** std::copy<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_algobase.h:460)
+==4125==    by 0x420ECB: SharkBone** std::__uninitialized_copy<true>::__uninit_copy<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_uninitialized.h:93)
+==4125==    by 0x420E36: SharkBone** std::uninitialized_copy<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_uninitialized.h:117)
+==4125==    by 0x420CED: SharkBone** std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**, SharkBone*>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**, std::allocator<SharkBone*>&) (stl_uninitialized.h:258)
+==4125==    by 0x420638: std::vector<SharkBone*, std::allocator<SharkBone*> >::vector(std::vector<SharkBone*, std::allocator<SharkBone*> > const&) (stl_vector.h:316)
+==4125==    by 0x4205A3: SharkBone::gBones() (SharkBone.h:31)
+==4125==    by 0x42044D: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:29)
+==4125==    by 0x41D767: SharkMesh::drawSkeleton(unsigned int) (SharkMesh.cpp:211)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x4C2F5FE: memcpy@GLIBC_2.2.5 (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4125==    by 0x421095: SharkBone** std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<SharkBone*>(SharkBone* const*, SharkBone* const*, SharkBone**) (stl_algobase.h:372)
+==4125==    by 0x421026: SharkBone** std::__copy_move_a<false, SharkBone* const*, SharkBone**>(SharkBone* const*, SharkBone* const*, SharkBone**) (stl_algobase.h:390)
+==4125==    by 0x420FC6: SharkBone** std::__copy_move_a2<false, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_algobase.h:428)
+==4125==    by 0x420F56: SharkBone** std::copy<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_algobase.h:460)
+==4125==    by 0x420ECB: SharkBone** std::__uninitialized_copy<true>::__uninit_copy<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_uninitialized.h:93)
+==4125==    by 0x420E36: SharkBone** std::uninitialized_copy<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**) (stl_uninitialized.h:117)
+==4125==    by 0x420CED: SharkBone** std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**, SharkBone*>(__gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, __gnu_cxx::__normal_iterator<SharkBone* const*, std::vector<SharkBone*, std::allocator<SharkBone*> > >, SharkBone**, std::allocator<SharkBone*>&) (stl_uninitialized.h:258)
+==4125==    by 0x420638: std::vector<SharkBone*, std::allocator<SharkBone*> >::vector(std::vector<SharkBone*, std::allocator<SharkBone*> > const&) (stl_vector.h:316)
+==4125==    by 0x4205A3: SharkBone::gBones() (SharkBone.h:31)
+==4125==    by 0x42044D: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:29)
+==4125==    by 0x41D767: SharkMesh::drawSkeleton(unsigned int) (SharkMesh.cpp:211)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x420509: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:33)
+==4125==    by 0x41D767: SharkMesh::drawSkeleton(unsigned int) (SharkMesh.cpp:211)
+==4125==    by 0x406070: main (Main.cpp:180)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x420509: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:33)
+==4125==    by 0x4204C6: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:34)
+==4125==    by 0x41D767: SharkMesh::drawSkeleton(unsigned int) (SharkMesh.cpp:211)
+==4125==    by 0x406070: main (Main.cpp:180)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x420509: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:33)
+==4125==    by 0x4204C6: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:34)
+==4125==    by 0x4204C6: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:34)
+==4125==    by 0x41D767: SharkMesh::drawSkeleton(unsigned int) (SharkMesh.cpp:211)
+==4125==    by 0x406070: main (Main.cpp:180)
+==4125== 
+==4125== Conditional jump or move depends on uninitialised value(s)
+==4125==    at 0x420509: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:33)
+==4125==    by 0x4204C6: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:34)
+==4125==    by 0x4204C6: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:34)
+==4125==    by 0x4204C6: Keyframe::setKeyframes(SharkBone*, glm::detail::tvec3<float>, float) (Keyframe.cpp:34)
+==4125==    by 0x41D767: SharkMesh::drawSkeleton(unsigned int) (SharkMesh.cpp:211)
+==4125==    by 0x406070: main (Main.cpp:180)
+==4125== 
+==4125== 
+==4125== HEAP SUMMARY:
+==4125==     in use at exit: 266,696 bytes in 1,171 blocks
+==4125==   total heap usage: 68,713 allocs, 67,542 frees, 10,245,722 bytes allocated
+==4125== 
+==4125== LEAK SUMMARY:
+==4125==    definitely lost: 36,137 bytes in 112 blocks
+==4125==    indirectly lost: 125,568 bytes in 436 blocks
+==4125==      possibly lost: 1,216 bytes in 34 blocks
+==4125==    still reachable: 103,775 bytes in 589 blocks
+==4125==         suppressed: 0 bytes in 0 blocks
+==4125== Rerun with --leak-check=full to see details of leaked memory
+==4125== 
+==4125== For counts of detected and suppressed errors, rerun with: -v
+==4125== Use --track-origins=yes to see where uninitialised values come from
+==4125== ERROR SUMMARY: 15742 errors from 37 contexts (suppressed: 2 from 2)
