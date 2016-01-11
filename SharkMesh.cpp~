@@ -172,6 +172,25 @@ void SharkMesh::safe_glUniformMatrix4fv(const GLint handle, const GLfloat data[]
     glUniformMatrix4fv(handle, 1, GL_FALSE, data);
 }
 
+/*
+vector<SharkBone *> SharkMesh::chooseBones(SharkBone *bone) {
+   vector<SharkBone *>::iterator ic;
+   vector<SharkBone *> childBones = bone->gBones();
+
+   vector<SharkBone *> boneSet;
+
+   for(ic = childBones.begin(); ic != childBones.end(); ic++) {
+      if(std::find(bones.begin(), bones.end(), (*ic)) == bones.end()) {
+         // bones does not contain child bone, add it to the new vector
+         printf("%s\n", ((*ic)->gName()).c_str());
+
+         boneSet.push_back((*ic));
+      }
+   }
+
+   return boneSet;
+}*/
+
 void SharkMesh::drawSkeleton(GLuint ShadeProg) {
    typedef map<string, SharkBone*> BoneMap;
    BoneMap boneMap = skeleton->gBones();
@@ -207,12 +226,14 @@ void SharkMesh::drawSkeleton(GLuint ShadeProg) {
       string name = it->first;
       SharkBone *bone = it->second;
       
+      printf("%s\n", name.c_str());
+      
       if (strcmp(name.c_str(), "Spine5") == 0) {
-         keyframes->setKeyframes(bone, glm::vec3(0, 1, 0), yRot+15);
+         //keyframes->setKeyframes(bone, glm::vec3(0, 1, 0), yRot+15);
       }
-      else {
-         keyframes->setKeyframes(bone, glm::vec3(0, 1, 0), yRot);
-      }
+      //else {
+         //keyframes->setKeyframes(bone, glm::vec3(0, 1, 0), yRot);
+      //}
 
       /*glm::vec3 head = bone->headPoint;
       glm::vec3 tail = bone->tailPoint;
@@ -222,6 +243,8 @@ void SharkMesh::drawSkeleton(GLuint ShadeProg) {
       glVertex3f(head.x, head.y, head.z);
       glVertex3f(tail.x, tail.y, tail.z);*/
    }
+
+   printf("\n\n\n");
 
    glEnd();
 

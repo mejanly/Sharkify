@@ -52,7 +52,8 @@ class SharkMesh {
       GLint h_uMatShine;
       GLint h_uLightInts;
       SharkSkeleton *skeleton;
-      //Keyframe *keyframes;
+      Keyframe *keyframes;
+      vector<SharkBone *> TESTORDER;
       
       int winWidth;
       int winHeight;
@@ -62,5 +63,6 @@ class SharkMesh {
       
       void SetProjectionMatrix();
       void safe_glUniformMatrix4fv(const GLint handle, const GLfloat data[]);
+      vector<SharkBone *> chooseBones(SharkBone *bone);
 };
 

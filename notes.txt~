@@ -1,4 +1,77 @@
-THE FIRST ORDER OF BUSINESS: So... Things draw like an accordian?
+THE FIRST ORDER OF BUSINESS: 
+   What about a stack for bones? Hmm.
+   
+   Or create an actual tree struct with parent, child, and siblings...
+      I've been thinking about this since the beginning...it might be time
+         to actually do it...
+   Perhaps keep an array of top-level bones to recurse through their children?
+      What about siblings? Does that complicate things too much? Do we need
+         siblings? The original code just uses child bones (as one vector)...
+         But then I guess since they are just in a vector the "children" are
+         siblings to each other?
+   So a tree node has a parent and children which are siblings to each other?
+   
+   Back to the stack idea: Instead of an array, push on the stack each top-level
+      bone? Would that work...?   
+
+
+
+
+   What is a sustainable way to store bone transform matrices?
+   Should the drawing all be done in SharkMesh? Should there be
+      wrapper functions?
+         Keyframe probably doesn't make sense. SharkVertex might
+            make sense once it's implemented correctly. Maybe still
+            SharkMesh for the bones. SharkBone even?? Hmm. If the
+            RH is sent to each SharkBone as a pointer and you push
+            the matrices that way??? Uhhh.
+   Need to be able to push matrix, transform, draw, and pop in that
+      order with the bones drawing in the correct order as well.
+         It might make sense to create some kind of function for 
+            traversing the bones in the appropriate order from X
+            bone, like start at Spine4 and draw down the line...
+               But if it's just recursing through you should only
+                  need to start at a few bones and recurse down.
+               Another problem is some of the hierarchy will need
+                  to go in reverse order because the top half of
+                  the shark's body will wiggle in the opposite
+                  direction from the lower half of the shark's body.
+               Perhaps it would make sense to build a vector (or linked
+                  list? unsure of what would be an appropriate data 
+                  structure but it would need to be something that goes
+                  in one order) given a direction (like left, right, up
+                  down).
+
+Maybe I'm getting too ahead of myself.
+For now... Just figure out how to store each bone matrix. So there's one
+   transform matrix per bone. Load that matrix and draw the bone.
+
+SharkBone->createOrder? Or just hard-code the orders in? That might be better.
+   Then I can save different orders for different transforms and have a 
+   switchOrder function that just changes which order we're using. Maybe
+   in Keyframe. This involves knowing the order the bones are supposed to
+   be in though...weh. For now could just take the Spine4 and add that and all 
+   the other bones that aren't children of Spine4...meaning some bones won't be
+   in the order. So maybe instead of createOrder it would be chooseBones.
+If you have all the bones + Spine4 - Spine4's children... Once you get to Spine4
+   you could draw separately, pushing and popping each child's matrix? You don't 
+   need to push the matrices of the other bones.
+
+
+make funcs for get head/tail vec4
+move the rest of this to sharkmesh?
+Put the matrix stack in sharkmesh...but send it here
+   push from this func, pop from sharkmesh?
+   need to be able to push the current bone...not just bones
+      in order
+   separate rendering helpers for shark bones and shark mesh for now?
+      eventually they will be the same because we're only storing
+         the different matrices for each bone, and the matrices
+         for the individual vertices will be calculated intermittently
+
+
+
+So... Things draw like an accordian?
    Look at SharkMesh (added yRot in so that could be doing stuff).
    Also made it so the children are modified by the same angle (probable
       culprit).
@@ -9,7 +82,7 @@ Move to right location, push, transform, draw, pop
 
 
 
-So...the local transform just positions the bone, and the combined transform
+The local transform just positions the bone, and the combined transform
    rotates (or transforms, w/e) it. 
 The local transform is a vector and a matrix right now... 
 The combined transform is just a matrix (rendering helper...a separate one from 

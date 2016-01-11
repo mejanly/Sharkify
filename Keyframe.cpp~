@@ -16,7 +16,15 @@ void Keyframe::setKeyframes(SharkBone *bone, glm::vec3 dir, float angle) {
    MatStack.rotate(angle, dir); 
    
    glm::mat4 curr = MatStack.getMatrix();
+   /*set bone matrix here
    
+   make funcs for get head/tail vec4
+   move the rest of this to sharkmesh?
+   Put the matrix stack in sharkmesh...but send it here
+      push from this func, pop from sharkmesh?
+      need to be able to push the current bone...not just bones
+         in order
+    */
    glm::vec4 head = curr * glm::vec4(bone->headPoint - glm::vec3(0, 0, 0), 1);
    glm::vec4 tail = curr * glm::vec4(bone->tailPoint - glm::vec3(0, 0, 0), 1);
 
