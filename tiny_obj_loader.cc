@@ -598,10 +598,6 @@ std::string LoadObj(
       vt.push_back(y);
       continue;
     }
-    
-    if (token[0] == 'b') {
-      // TODO get the bones into the tree structure
-    }
 
     // face
     if (token[0] == 'f' && isSpace((token[1]))) {

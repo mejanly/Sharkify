@@ -53,12 +53,12 @@ void RenderingHelper::translate(const vec3 &offset)
 
 void RenderingHelper::scale(float x, float y, float z)
 {
-	*currentMatrix *= glm::scale(x, y, z);
+	*currentMatrix *= glm::scale(glm::vec3(x, y, z));
 }
 
 void RenderingHelper::scale(float size)
 {
-	*currentMatrix *= glm::scale(size, size, size);
+	*currentMatrix *= glm::scale(glm::vec3(size, size, size));
 }
 
 void RenderingHelper::rotate(float angle, const vec3 &axis)

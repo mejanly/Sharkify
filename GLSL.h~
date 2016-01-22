@@ -11,7 +11,7 @@
 
 #include "GLIncludes.h"
 
-//#pragma once
+#pragma once
 #ifndef __GLSL__
 #define __GLSL__
 
