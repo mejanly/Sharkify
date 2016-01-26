@@ -223,7 +223,6 @@ void drawGL()
    assert(glGetError() == GL_NO_ERROR);
 }
 
-
 int main(int argc, char **argv) {
 	srand(time(NULL));
 

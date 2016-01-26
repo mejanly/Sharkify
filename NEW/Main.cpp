@@ -265,7 +265,7 @@ int main(int argc, char **argv) {
    
    head = new Shape(materials);
    head->loadShapes("SharkSubdivParts/Head_Upper.obj");
-    
+   
    initGL();
    installShaders("vert.glsl", "frag.glsl");
 
