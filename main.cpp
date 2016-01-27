@@ -216,7 +216,7 @@ void DrawModelFront() {
 	drawSharkPiece(posBufObjFB, norBufObjFB, indBufObjFB, sFrontBod);
 	ModelTrans.popMatrix();
 
-   /*ModelTrans.popMatrix();
+   ModelTrans.popMatrix();
 	ModelTrans.rotate(sharkRotZ, glm::vec3(0, 0, 1));
 	ModelTrans.translate(glm::vec3(0, -.43, -.65));
 	ModelTrans.pushMatrix();
@@ -247,11 +247,11 @@ void DrawModelFront() {
 	ModelTrans.pushMatrix();
 	ModelTrans.rotate(sharkRot, glm::vec3(0, 1, 0));
 	ModelTrans.scale(.3);
-	drawSharkPiece(posBufObjJ, norBufObjJ, indBufObjJ, sJaw);*/
+	drawSharkPiece(posBufObjJ, norBufObjJ, indBufObjJ, sJaw);
 }
 
 void DrawModelBack() {
-	/*ModelTrans.popMatrix();
+	ModelTrans.popMatrix();
 	ModelTrans.translate(glm::vec3(-1.63, .66, 0));
 	ModelTrans.rotate(bbAngle, glm::vec3(0, 1, 0));	
 	ModelTrans.pushMatrix();
@@ -283,7 +283,7 @@ void DrawModelBack() {
 	ModelTrans.translate(glm::vec3(-.4, -.09, 0));
 	ModelTrans.rotate(sharkRot, glm::vec3(0, 1, 0));
 	ModelTrans.scale(.75);
-	drawSharkPiece(posBufObjT, norBufObjT, indBufObjT, sTail);*/
+	drawSharkPiece(posBufObjT, norBufObjT, indBufObjT, sTail);
 }
 
 //Given a vector of shapes which has already been read from an obj file

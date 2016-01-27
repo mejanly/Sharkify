@@ -22,6 +22,17 @@ void window_size_callback(GLFWwindow* window, int w, int h){
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+   // Roll shark along X axis
+	if (key == GLFW_KEY_I && action == GLFW_PRESS)
+	   SharkRotX += .08;
+	if (key == GLFW_KEY_K && action == GLFW_PRESS)
+	   SharkRotX -= .08;
+	// Rotate shark around Y axis
+	if (key == GLFW_KEY_J && action == GLFW_PRESS)
+	   SharkRotY += .08;
+	if (key == GLFW_KEY_L && action == GLFW_PRESS)
+	   SharkRotY -= .08;
+	
 	/*if (key == GLFW_KEY_A && action == GLFW_PRESS)
       g_movey += 2;
    if (key == GLFW_KEY_D && action == GLFW_PRESS)
@@ -66,6 +77,28 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void initGL()
 {
+   uHead = new Shape(materials);
+   uHead->loadShapes("SharkSubdivParts/Head_Upper.obj");
+   lHead = new Shape(materials);
+   lHead->loadShapes("SharkSubdivParts/Head_Lower.obj");
+   lsFin = new Shape(materials);
+   lsFin->loadShapes("SharkSubdivParts/SideFin_L.obj");
+   rsFin = new Shape(materials);
+   rsFin->loadShapes("SharkSubdivParts/SideFin_R.obj");
+   tbFin = new Shape(materials);
+   tbFin->loadShapes("SharkSubdivParts/TopFin.obj");
+   fBody = new Shape(materials);
+   fBody->loadShapes("SharkSubdivParts/Body_Front.obj");
+   mBody = new Shape(materials);
+   mBody->loadShapes("SharkSubdivParts/Body_Mid.obj");
+   rBody = new Shape(materials);
+   rBody->loadShapes("SharkSubdivParts/Body_Rear.obj");
+   btFin = new Shape(materials);
+   btFin->loadShapes("SharkSubdivParts/BackFin_Top.obj");
+   bbFin = new Shape(materials);
+   bbFin->loadShapes("SharkSubdivParts/BackFin_Bottom.obj");
+   
+
    // Set the background color
    glClearColor(0.0f, 0.1f, 0.5f, 1.0f);
    
@@ -73,7 +106,17 @@ void initGL()
    glEnable(GL_DEPTH_TEST);
    glPointSize(18);
    
-   head->initObj();
+   uHead->initObj();
+   lHead->initObj();
+   lsFin->initObj();
+   rsFin->initObj();
+   tbFin->initObj();
+   fBody->initObj();
+   mBody->initObj();
+   rBody->initObj();
+   btFin->initObj();
+   bbFin->initObj();
+   
 }
 
 bool installShaders(const string &vShaderName, const string &fShaderName)
@@ -176,7 +219,7 @@ void drawSharkPiece(Shape *shp) {
 	int sIndices = (int)shapes[0].mesh.indices.size();
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, shp->gInd());
 
-	//draw the head	
+	//draw the piece
 	glDrawElements(GL_TRIANGLES, sIndices, GL_UNSIGNED_INT, 0);
 
    GLSL::disableVertexAttribArray(h_aPosition);
@@ -194,10 +237,72 @@ void drawShark() {
    glUniform1f(h_uLightInts, .5);
 
    ModelTrans.loadIdentity();
-	ModelTrans.translate(glm::vec3(0, 0, -5));
+	ModelTrans.translate(glm::vec3(0, 0, -10)); // To move entire shark back
+	ModelTrans.rotate(135+SharkRotX, glm::vec3(1, 0, 0)); // Wtf @ 135 ?
+	ModelTrans.rotate(SharkRotY, glm::vec3(0, 1, 0));
+	ModelTrans.translate(glm::vec3(-1.25, 0, 0)); // Putting this here rotates shark around middle 
 	ModelTrans.pushMatrix();
-	ModelTrans.scale(.5);
-	drawSharkPiece(head);
+	ModelTrans.scale(.25);
+	drawSharkPiece(uHead);
+	ModelTrans.popMatrix();
+	
+  /* IMPORTANT: Each "global translation" is pushed, so the next one is
+   * relative to where the last piece was place, and depends on the size
+   * of the new piece. Possibly you aren't supposed to push the global
+   * translations... TODO?
+   */
+	ModelTrans.translate(glm::vec3(.23, -.025, 0));
+	ModelTrans.pushMatrix();
+	ModelTrans.scale(.26);
+	drawSharkPiece(lHead);
+	ModelTrans.popMatrix();
+	
+	ModelTrans.translate(glm::vec3(.38, .015, 0));
+	ModelTrans.pushMatrix();
+	ModelTrans.scale(.28);
+	drawSharkPiece(fBody);
+	ModelTrans.popMatrix();
+	
+	ModelTrans.translate(glm::vec3(.06, -.23, -.39));
+	ModelTrans.pushMatrix();
+	ModelTrans.scale(.28);
+	drawSharkPiece(rsFin);
+	ModelTrans.popMatrix();
+	
+   ModelTrans.translate(glm::vec3(0, 0, .78));
+	ModelTrans.pushMatrix();
+	ModelTrans.scale(.28);
+	drawSharkPiece(lsFin);
+	ModelTrans.popMatrix();
+	
+	ModelTrans.translate(glm::vec3(.5, .215, -.39));
+	ModelTrans.pushMatrix();
+	ModelTrans.scale(.38);
+	drawSharkPiece(mBody);
+	ModelTrans.popMatrix();
+	
+	ModelTrans.translate(glm::vec3(-.15, .4, 0));
+	ModelTrans.pushMatrix();
+	ModelTrans.scale(.2);
+	drawSharkPiece(tbFin);
+	ModelTrans.popMatrix();
+	
+	ModelTrans.translate(glm::vec3(.82, -.38, 0));
+	ModelTrans.pushMatrix();
+	ModelTrans.scale(.32);
+	drawSharkPiece(rBody);
+	ModelTrans.popMatrix();
+	
+	ModelTrans.translate(glm::vec3(.57, .16, 0));
+	ModelTrans.pushMatrix();
+	ModelTrans.scale(.26);
+	drawSharkPiece(btFin);
+	ModelTrans.popMatrix();
+	
+	ModelTrans.translate(glm::vec3(-.01, -.43, 0));
+	ModelTrans.pushMatrix();
+	ModelTrans.scale(.26);
+	drawSharkPiece(bbFin);
 	ModelTrans.popMatrix();
 }
 
@@ -263,9 +368,6 @@ int main(int argc, char **argv) {
    glEnable (GL_BLEND);
    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
    
-   head = new Shape(materials);
-   head->loadShapes("SharkSubdivParts/Head_Upper.obj");
-    
    initGL();
    installShaders("vert.glsl", "frag.glsl");
 

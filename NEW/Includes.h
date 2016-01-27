@@ -18,7 +18,6 @@ using namespace std;
 
 GLFWwindow* window;
 vector<tinyobj::material_t> materials;
-Shape *head;
 GLuint ShadeProg;
 RenderingHelper ModelTrans;
 
@@ -27,6 +26,18 @@ int g_height = 768;
 
 glm::vec3 g_light1(-5, 8, 0);
 glm::vec3 g_light2(5, 8, 0);
+
+Shape *uHead;
+Shape *lHead;
+Shape *fBody;
+Shape *mBody;
+Shape *rBody;
+Shape *lsFin;
+Shape *rsFin;
+Shape *tbFin;
+Shape *btFin;
+Shape *bbFin;
+
 
 GLint h_aPosition;
 GLint h_aNormal;
@@ -37,5 +48,8 @@ GLint h_uLightPos1;
 GLint h_uLightPos2;
 GLint h_uMatAmb, h_uMatDif, h_uMatSpec, h_uMatShine;
 GLint h_uLightInts;
+
+float SharkRotX = 0.0;
+float SharkRotY = 0.0;
 
 #endif
