@@ -40,15 +40,11 @@ Shape *btFin;
 Shape *bbFin;
 
 // An angle of rotation for each piece
-float uhAngle = 0;
-float lhAngle = 0;
+float hdAngle = 0;
 float fbAngle = 0;
-float rfAngle = 0;
-float lfAngle = 0;
 float mbAngle = 0;
 float rbAngle = 0;
-float btAngle = 0;
-float bbAngle = 0;
+float tfAngle = 0;
 
 // Whole shark rotation variables
 float SharkRotX = 0.0;

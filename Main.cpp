@@ -236,35 +236,15 @@ void drawShark() {
    glUniform1f(h_uMatShine, 2.0);
    glUniform1f(h_uLightInts, .5);
 
-   // UPPER HEAD
+   // FRONT BODY
    ModelTrans.loadIdentity();
-   // zoom out from shark
+   // Zoom out from shark
 	ModelTrans.translate(glm::vec3(0, 0, -10)); // To move entire shark back
-   // roll whole shark
+   // Roll whole shark
 	ModelTrans.rotate(135+SharkRotX, glm::vec3(1, 0, 0)); // Wtf @ 135 ?
-	// turn whole shark
-	ModelTrans.rotate(SharkRotY, glm::vec3(0, 1, 0));
 	// Putting this here rotates shark around middle 
-	ModelTrans.translate(glm::vec3(-1.25, 0, 0)); 
-	ModelTrans.pushMatrix();
-	// Rotates the head piece only
-	//ModelTrans.rotate(uhAngle, glm::vec3(0, 1, 0));
-	ModelTrans.scale(.25);
-	drawSharkPiece(uHead);
-	ModelTrans.popMatrix();
-  /* IMPORTANT: Each "global translation" is pushed, so the next one is
-   * relative to where the last piece was place, and depends on the size
-   * of the new piece. Possibly you aren't supposed to push the global
-   * translations... TODO?
-   */
-   // LOWER HEAD
-	ModelTrans.translate(glm::vec3(.23, -.025, 0));
-	ModelTrans.pushMatrix();
-	ModelTrans.scale(.26);
-	drawSharkPiece(lHead);
-	ModelTrans.popMatrix();
-	// FRONT BODY
-	ModelTrans.translate(glm::vec3(.38, .015, 0));
+	ModelTrans.translate(glm::vec3(-.65, 0, 0)); 
+	ModelTrans.rotate(fbAngle, glm::vec3(0, 1, 0));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.28);
 	drawSharkPiece(fBody);
@@ -281,9 +261,25 @@ void drawShark() {
 	ModelTrans.scale(.28);
 	drawSharkPiece(lsFin);
 	ModelTrans.popMatrix();
-	// MID BODY
-	ModelTrans.translate(glm::vec3(.5, .215, -.39));
+	// LOWER HEAD
+	ModelTrans.translate(glm::vec3(-.45, .215, -.39));
+	ModelTrans.rotate(hdAngle, glm::vec3(0, 1, 0));
 	ModelTrans.pushMatrix();
+	ModelTrans.scale(.26);
+	drawSharkPiece(lHead);
+	ModelTrans.popMatrix();
+	// UPPER HEAD
+	ModelTrans.translate(glm::vec3(-.23, .03, 0));
+	ModelTrans.pushMatrix();
+	ModelTrans.scale(.24);
+	drawSharkPiece(uHead);
+	ModelTrans.popMatrix();
+   
+	// MID BODY
+	ModelTrans.translate(glm::vec3(.6, -.03, 0));
+	ModelTrans.rotate(mbAngle, glm::vec3(0, 1, 0));
+	ModelTrans.translate(glm::vec3(.6, 0, 0));
+	ModelTrans.pushMatrix();     
 	ModelTrans.scale(.38);
 	drawSharkPiece(mBody);
 	ModelTrans.popMatrix();
@@ -294,13 +290,17 @@ void drawShark() {
 	drawSharkPiece(tbFin);
 	ModelTrans.popMatrix();
 	// REAR BODY
-	ModelTrans.translate(glm::vec3(.82, -.38, 0));
+	ModelTrans.translate(glm::vec3(.41, -.38, 0));
+	ModelTrans.rotate(rbAngle, glm::vec3(0, 1, 0));
+	ModelTrans.translate(glm::vec3(.41, 0, 0));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.32);
 	drawSharkPiece(rBody);
 	ModelTrans.popMatrix();
 	// BACK TOP FIN
-	ModelTrans.translate(glm::vec3(.57, .16, 0));
+	ModelTrans.translate(glm::vec3(.27, .16, 0));
+	ModelTrans.rotate(tfAngle, glm::vec3(0, 1, 0));
+	ModelTrans.translate(glm::vec3(.3, 0, 0));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.26);
 	drawSharkPiece(btFin);
@@ -331,17 +331,12 @@ void drawGL()
    // Increment the variable that determines the speed of the rotations
    theta += thetaAdd;
    
-   uhAngle = -cos(theta)*.2 - (SharkRotY / 7);
-	lhAngle = -cos(theta)*.2 - (SharkRotY / 7);
-	/*fbAngle = -cos(theta)*.9 - (SharkRotY / 5);
-	rfAngle = -cos(theta)*.9 - (SharkRotY / 5);
-	lfAngle = -cos(theta)*.9 - (SharkRotY / 5);
-
-	mbAngle = cos(theta)*5 + (SharkRotY / 5);
-	rbAngle = cos(theta)*10 + (SharkRotY / 3);
-	btAngle = cos(theta)*15 + SharkRotY;
-	bbAngle = cos(theta)*20 + S harkRotY;*/
-
+   hdAngle = -cos(theta)*.07 - (SharkRotY / 7);
+	fbAngle = -cos(theta)*.1 - (SharkRotY / 5);
+	mbAngle = cos(theta)*.2 + (SharkRotY / 5);
+	rbAngle = cos(theta)*.25 + (SharkRotY / 3);
+	tfAngle = cos(theta)*.3 + SharkRotY;
+	
    // Draw shark
    drawShark();
 
