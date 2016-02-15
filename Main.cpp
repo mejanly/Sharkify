@@ -1,5 +1,104 @@
 #include "Includes.h"
 
+/*GLuint FBO_Basic, FBO_CBasic, FBO_DBasic, FBO_TBasic;
+void initFBO() {
+   // Init basic FBO
+   glGenFramebuffers(1, &FBO_Basic);
+   glBindFramebuffer(GL_FRAMEBUFFER, FBO_Basic);
+   // rendered texture
+   glGenTextures(1, &FBO_TBasic);
+   glBindTexture(GL_TEXTURE_2D, FBO_TBasic);
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1024, 768, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+   // depth buffer
+   glGenRenderbuffers(1, &FBO_DBasic);
+   glBindRenderbuffer(GL_RENDERBUFFER, FBO_DBasic);
+   glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 1024, 768);
+   glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, FBO_DBasic);
+   // color buffer
+   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, FBO_TBasic, 0);
+   GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
+   glDrawBuffers(1, DrawBuffers);
+   if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+      printf("Error making basic frame buffer object\n");
+      return;
+   }
+}*/
+
+/*void setTexture(int tex) {
+   texture_id = tex;
+
+   // reference for fresnel values: http://forums.cgsociety.org/archive/index.php/t-513458.html
+   // Set cook torrance values depending on texture
+   switch (tex) {
+   case TEX_SKY_DAY:
+      roughness = 1.0;
+      fresnel = 1.0;
+      geometric = 1.0;
+      break;
+   case TEX_WOOD_LIGHT:
+   case TEX_WOOD_DARK:
+   case TEX_WOOD_RED:
+   case TEX_WOOD_WALL:
+   case TEX_TARGET:
+   case TEX_HAMMER:
+      roughness = 0.8;
+      fresnel = 1.3;
+      geometric = 0.9;
+      break;
+   case TEX_LANTERN:
+      roughness = 1.0;
+      fresnel = 1.6;
+      geometric = 1.0;
+      break;
+   case TEX_MELON_OUT:
+      roughness = 0.2;
+      fresnel = 1.6;
+      geometric = 0.3;
+      break;
+   case TEX_MELON_IN:
+      roughness = 0.5;
+      fresnel = 1.6;
+      geometric = 0.1;
+      break;
+   case TEX_PARTICLE:
+      roughness = 0.0;
+      fresnel = 1.0;
+      geometric = 0.1;
+      break;
+   case TEX_MIKU:
+   case TEX_RIN:
+   case TEX_LEN:
+   case TEX_KAITO:
+   case TEX_SQUISH_BLUE:
+   case TEX_SQUISH_PURPLE:
+   case TEX_GIRL_RED:
+   case TEX_GIRL_BLUE:
+   case TEX_GIRL_GREEN:
+   case TEX_GIRL_PINK:
+      roughness = 0.6;
+      fresnel = 1.6;
+      geometric = 0.8;
+      break;
+   case TEX_STEEL:
+      roughness = 0.1;
+      fresnel = 2.5;
+      geometric = 0.2;
+      break;
+   case TEX_GROUND_SAKURA:
+   case TEX_GROUND_GRASS:
+   case TEX_MISC:
+   default:
+      roughness = 1.0;
+      fresnel = 1.6;
+      geometric = 1.0;
+      break;
+   }
+}*/
+
 int printOglError (const char *file, int line) {
    /* Returns 1 if an OpenGL error occurred, 0 otherwise. */
    GLenum glErr;
@@ -27,56 +126,17 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	   SharkRotX += .08;
 	if (key == GLFW_KEY_K && action == GLFW_PRESS)
 	   SharkRotX -= .08;
-	// Rotate shark around Y axis
+	// Rotate shark around Y axis -- BROKEN
 	if (key == GLFW_KEY_J && action == GLFW_PRESS)
 	   SharkRotY += .08;
 	if (key == GLFW_KEY_L && action == GLFW_PRESS)
 	   SharkRotY -= .08;
-	
-	/*if (key == GLFW_KEY_A && action == GLFW_PRESS)
-      g_movey += 2;
-   if (key == GLFW_KEY_D && action == GLFW_PRESS)
-      g_movey -= 2;
-   if (key == GLFW_KEY_N && action == GLFW_PRESS)
-	  sharkZoom += .1;
-	if (key == GLFW_KEY_M && action == GLFW_PRESS)
-	  sharkZoom -= .1;
-	if (key == GLFW_KEY_T && action == GLFW_PRESS)
-	  thetaAdd += .001;
-	if (key == GLFW_KEY_Y && action == GLFW_PRESS)
-		if (thetaAdd - .001 >= .005) {
-			thetaAdd -= .001;
-		}
-	if (key == GLFW_KEY_I && action == GLFW_PRESS) {
-		if (wallCol.b <= 1.0) {
-			wallCol += .01;
-		}
-		if (intensity + .005 <= .8) {
-			intensity += .005;
-		}
-		if (g_light1.y - .5 >= 2) {
-			g_light1.y -= .5;
-			g_light2.y -= .5;
-		}
-		sharkRotZAdd = .002;
-	}
-	if (key == GLFW_KEY_K && action == GLFW_PRESS) {
-		wallCol -= .01;
-		if (intensity - .005 >= .005) {
-			intensity -= .005;
-		}
-		g_light1.y += .5;
-		g_light2.y += .5;
-		sharkRotZAdd = -.002;
-	}
-	if (key == GLFW_KEY_J && action == GLFW_PRESS) 
-		sharkRotYAdd = -.002;
-	if (key == GLFW_KEY_L && action == GLFW_PRESS) 
-		sharkRotYAdd = .002;*/
 }
 
 void initGL()
 {
+   //loadAllTextures();
+
    uHead = new Shape(materials);
    uHead->loadShapes("SharkSubdivParts/Head_Upper.obj");
    lHead = new Shape(materials);
@@ -98,6 +158,13 @@ void initGL()
    bbFin = new Shape(materials);
    bbFin->loadShapes("SharkSubdivParts/BackFin_Bottom.obj");
    
+   // initialize shaders
+   shaders[SHADER_DEFAULT] = new Program();
+   shaders[SHADER_DEFAULT]->setShaderNames(DEFAULT_VERT_SHADER, DEFAULT_FRAG_SHADER);
+   shaders[SHADER_TEXT] = new Program();
+   shaders[SHADER_TEXT]->setShaderNames(TEXT_VERT_SHADER, TEXT_FRAG_SHADER);
+   shaders[SHADER_BILLBOARD] = new Program();
+   shaders[SHADER_BILLBOARD]->setShaderNames(BILLBOARD_VERT_SHADER, BILLBOARD_FRAG_SHADER);
 
    // Set the background color
    glClearColor(0.0f, 0.1f, 0.5f, 1.0f);
@@ -105,6 +172,47 @@ void initGL()
    // Enable Z-buffer test
    glEnable(GL_DEPTH_TEST);
    glPointSize(18);
+   
+   printf("Shaders loaded.\n");
+
+   printf("Initializing shaders.\n");
+   shaders[SHADER_DEFAULT]->init();
+   shaders[SHADER_TEXT]->init();
+   
+   
+   h_aPosition = shaders[SHADER_DEFAULT]->addAttribute("aPosition");
+   h_aNormal = shaders[SHADER_DEFAULT]->addAttribute("aNormal");
+   h_uProjMatrix = shaders[SHADER_DEFAULT]->addUniform("uProjMatrix");
+   h_uModelMatrix = shaders[SHADER_DEFAULT]->addUniform("uModelMatrix");
+   h_uLightPos1 = shaders[SHADER_DEFAULT]->addUniform("uLightPos1");
+   h_uMatAmb = shaders[SHADER_DEFAULT]->addUniform("UaColor");
+   h_uMatDif = shaders[SHADER_DEFAULT]->addUniform("UdColor");
+   h_uMatSpec = shaders[SHADER_DEFAULT]->addUniform("UsColor");
+   h_uMatShine = shaders[SHADER_DEFAULT]->addUniform("Ushine");
+   h_uLightInts = shaders[SHADER_DEFAULT]->addUniform("Uints");
+   
+   /*shaders[SHADER_BILLBOARD]->addAttribute("vertPosition");
+   shaders[SHADER_BILLBOARD]->addAttribute("vertTexCoords");
+   shaders[SHADER_BILLBOARD]->addUniform("P");
+   shaders[SHADER_BILLBOARD]->addUniform("MV");
+   shaders[SHADER_BILLBOARD]->addUniform("scale");
+   shaders[SHADER_BILLBOARD]->addUniform("color");
+   shaders[SHADER_BILLBOARD]->addTexture(&texture);*/
+
+   shaders[SHADER_TEXT]->addAttribute("aCoord");
+   shaders[SHADER_TEXT]->addUniform("uTex");
+   shaders[SHADER_TEXT]->addUniform("uCol");
+
+   // Enable texture drawing
+   /*glEnable(GL_TEXTURE_2D);
+   glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+   glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+   glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+   glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);*/
+
+   shaders[SHADER_TEXT]->addAttribute("aCoord");
+   shaders[SHADER_TEXT]->addUniform("uTex");
+   shaders[SHADER_TEXT]->addUniform("uCol");
    
    uHead->initObj();
    lHead->initObj();
@@ -117,76 +225,8 @@ void initGL()
    btFin->initObj();
    bbFin->initObj();
    
-}
-
-bool installShaders(const string &vShaderName, const string &fShaderName)
-{
-	GLint rc;
-	
-	// Create shader handles
-	GLuint VS = glCreateShader(GL_VERTEX_SHADER);
-	GLuint FS = glCreateShader(GL_FRAGMENT_SHADER);
-	
-	// Read shader sources
-	const char *vshader = GLSL::textFileRead(vShaderName.c_str());
-	const char *fshader = GLSL::textFileRead(fShaderName.c_str());
-	glShaderSource(VS, 1, &vshader, NULL);
-	glShaderSource(FS, 1, &fshader, NULL);
-	
-	// Compile vertex shader
- 	glCompileShader(VS);
-   std::cout << "just compiled the v shader" << std::endl;
-   printOglError(__FILE__, __LINE__);
-	GLSL::printError();
-	glGetShaderiv(VS, GL_COMPILE_STATUS, &rc);
-	GLSL::printShaderInfoLog(VS);
-	if(!rc) {
-		printf("Error compiling vertex shader %s\n", vShaderName.c_str());
-		return false;
-	}
-	
-	// Compile fragment shader
-	glCompileShader(FS);
-   std::cout << "just compiled the f shader" << std::endl;
-	GLSL::printError();
-	glGetShaderiv(FS, GL_COMPILE_STATUS, &rc);
-	GLSL::printShaderInfoLog(FS);
-	if(!rc) {
-		printf("Error compiling fragment shader %s\n", fShaderName.c_str());
-		return false;
-	}
-	
-	// Create the program and link
-   ShadeProg = glCreateProgram();
-   glAttachShader(ShadeProg, VS);
-   glAttachShader(ShadeProg, FS);
-   glLinkProgram(ShadeProg);
-   std::cout << "just linked the shaders" << std::endl;
-   
-	GLSL::printError();
-	glGetProgramiv(ShadeProg, GL_LINK_STATUS, &rc);
-	GLSL::printProgramInfoLog(ShadeProg);
-	if(!rc) {
-		printf("Error linking shaders %s and %s\n", vShaderName.c_str(), fShaderName.c_str());
-		return false;
-	}
-
-   /* get handles to attribute data */
-   h_aPosition = GLSL::getAttribLocation(ShadeProg, "aPosition");
-   h_aNormal = GLSL::getAttribLocation(ShadeProg, "aNormal");
-   h_uProjMatrix = GLSL::getUniformLocation(ShadeProg, "uProjMatrix");
-   h_uViewMatrix = GLSL::getUniformLocation(ShadeProg, "uViewMatrix");
-   h_uModelMatrix = GLSL::getUniformLocation(ShadeProg, "uModelMatrix");
-   h_uLightPos1 = GLSL::getUniformLocation(ShadeProg, "uLightPos1");
-   h_uLightPos2 = GLSL::getUniformLocation(ShadeProg, "uLightPos2");
-   h_uMatAmb = GLSL::getUniformLocation(ShadeProg, "UaColor");
-   h_uMatDif = GLSL::getUniformLocation(ShadeProg, "UdColor");
-   h_uMatSpec = GLSL::getUniformLocation(ShadeProg, "UsColor");
-   h_uMatShine = GLSL::getUniformLocation(ShadeProg, "Ushine");
-   h_uLightInts = GLSL::getUniformLocation(ShadeProg, "Uints");
-
-   assert(glGetError() == GL_NO_ERROR);
-   return true;
+   fontEngine = new FontEngine(g_width, g_height, shaders[SHADER_TEXT], shaders[SHADER_DEFAULT]);
+   fontEngine->init(shaders[SHADER_TEXT]->getPID());
 }
 
 inline void safe_glUniformMatrix4fv(const GLint handle, const GLfloat data[]) {
@@ -321,7 +361,8 @@ void drawGL()
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    // Use our GLSL program
-   glUseProgram(ShadeProg);
+   //glUseProgram(ShadeProg);
+   shaders[SHADER_DEFAULT]->bind();
    glUniform3f(h_uLightPos1, g_light1.x, g_light1.y, g_light1.z);
    glUniform3f(h_uLightPos2, g_light2.x, g_light2.y, g_light2.z);
 
@@ -331,15 +372,21 @@ void drawGL()
    // Increment the variable that determines the speed of the rotations
    theta += thetaAdd;
    
-   hdAngle = -cos(theta)*.07 - (SharkRotY / 7);
-	fbAngle = -cos(theta)*.1 - (SharkRotY / 5);
-	mbAngle = cos(theta)*.2 + (SharkRotY / 5);
-	rbAngle = cos(theta)*.25 + (SharkRotY / 3);
-	tfAngle = cos(theta)*.3 + SharkRotY;
+   hdAngle = -cos(theta)*.07;
+	fbAngle = -cos(theta)*.1;
+	mbAngle = cos(theta)*.2;
+	rbAngle = cos(theta)*.25;
+	tfAngle = cos(theta)*.3;
 	
    // Draw shark
    drawShark();
+   //setTexture(textures[TEX_GROUND_GRASS]);
+   char buff[25];
+   sprintf(buff, "SHARKTASTIC!!!");
+   fontEngine->useFont("caviar", 100);   
+   fontEngine->display(glm::vec4(0.0, 0.0, 1.0, 1.0), buff, 0-(fontEngine->getTextWidth(buff)/2), 0);      
 
+   shaders[SHADER_DEFAULT]->unbind();
    glUseProgram(0); 
    assert(glGetError() == GL_NO_ERROR);
 }
@@ -385,7 +432,7 @@ int main(int argc, char **argv) {
    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
    
    initGL();
-   installShaders("vert.glsl", "frag.glsl");
+   //installShaders("vert.glsl", "frag.glsl");
 
 	glClearColor(0.0f, 0.1f, 0.5f, 1.0f);
 

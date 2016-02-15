@@ -13,6 +13,19 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp" //perspective, trans etc
 #include "glm/gtc/type_ptr.hpp" //value_ptr
+#include "Program.h"
+#include "FontEngine.h"
+#include "Texture.h"
+
+#define SHADER_DEFAULT "default"
+#define SHADER_TEXT "text"
+#define SHADER_BILLBOARD "billboard"
+#define DEFAULT_VERT_SHADER "shaders/vert.glsl"
+#define DEFAULT_FRAG_SHADER "shaders/frag.glsl"
+#define TEXT_VERT_SHADER "shaders/text.v.glsl"
+#define TEXT_FRAG_SHADER "shaders/text.f.glsl"
+#define BILLBOARD_VERT_SHADER "shaders/billboard_vert.glsl"
+#define BILLBOARD_FRAG_SHADER "shaders/billboard_frag.glsl"
 
 using namespace std;
 
@@ -64,5 +77,14 @@ GLint h_uLightPos1;
 GLint h_uLightPos2;
 GLint h_uMatAmb, h_uMatDif, h_uMatSpec, h_uMatShine;
 GLint h_uLightInts;
+
+map<string, Program*> shaders;
+
+FontEngine *fontEngine;
+
+int texture_id;
+float roughness; // 0 : smooth, 1: rough
+float fresnel; // fresnel reflectance at normal incidence
+float geometric; // fraction of diffuse reflection (specular reflection = 1 - k)
 
 #endif

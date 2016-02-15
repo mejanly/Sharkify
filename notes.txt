@@ -1,3 +1,8 @@
+Texture mapped background
+Look at GUI stuff... Have some kind of GUI that changes the scene somehow
+(Two weeks)
+
+
 SHARK ENVIRONMENT FACTORS:
    http://www.sharksinfo.com/habitat.html
 
