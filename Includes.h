@@ -15,7 +15,6 @@
 #include "glm/gtc/type_ptr.hpp" //value_ptr
 #include "Program.h"
 #include "FontEngine.h"
-#include "Texture.h"
 
 #define SHADER_DEFAULT "default"
 #define SHADER_TEXT "text"
@@ -81,10 +80,5 @@ GLint h_uLightInts;
 map<string, Program*> shaders;
 
 FontEngine *fontEngine;
-
-int texture_id;
-float roughness; // 0 : smooth, 1: rough
-float fresnel; // fresnel reflectance at normal incidence
-float geometric; // fraction of diffuse reflection (specular reflection = 1 - k)
 
 #endif

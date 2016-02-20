@@ -13,6 +13,18 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp" //perspective, trans etc
 #include "glm/gtc/type_ptr.hpp" //value_ptr
+#include "Program.h"
+#include "FontEngine.h"
+
+#define SHADER_DEFAULT "default"
+#define SHADER_TEXT "text"
+#define SHADER_BILLBOARD "billboard"
+#define DEFAULT_VERT_SHADER "shaders/vert.glsl"
+#define DEFAULT_FRAG_SHADER "shaders/frag.glsl"
+#define TEXT_VERT_SHADER "shaders/text.v.glsl"
+#define TEXT_FRAG_SHADER "shaders/text.f.glsl"
+#define BILLBOARD_VERT_SHADER "shaders/billboard_vert.glsl"
+#define BILLBOARD_FRAG_SHADER "shaders/billboard_frag.glsl"
 
 using namespace std;
 
@@ -40,8 +52,7 @@ Shape *btFin;
 Shape *bbFin;
 
 // An angle of rotation for each piece
-float uhAngle = 0;
-float lhAngle = 0;
+float hdAngle = 0;
 float fbAngle = 0;
 float mbAngle = 0;
 float rbAngle = 0;
@@ -66,4 +77,7 @@ GLint h_uLightPos2;
 GLint h_uMatAmb, h_uMatDif, h_uMatSpec, h_uMatShine;
 GLint h_uLightInts;
 
+map<string, Program*> shaders;
+
+FontEngine *fontEngine;
 #endif

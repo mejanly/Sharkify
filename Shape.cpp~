@@ -33,7 +33,6 @@ void Shape::initObj() {
    assert(glGetError() == GL_NO_ERROR);
 }
 
-
 // Given a vector of shapes which has already been read from an obj file
 // resize all vertices to the range [-1, 1]
 void Shape::resize_obj() {
