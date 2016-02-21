@@ -3,6 +3,7 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glut.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -80,4 +81,14 @@ GLint h_uLightInts;
 map<string, Program*> shaders;
 
 FontEngine *fontEngine;
+float vertices[] = {
+//  Position      Color             Texcoords
+    -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Top-left
+     0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Top-right
+     0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
+    -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
+};
+
+GLuint texture;
+
 #endif

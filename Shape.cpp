@@ -30,7 +30,7 @@ void Shape::initObj() {
    glBindBuffer(GL_ARRAY_BUFFER, 0);
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
    GLSL::checkVersion();
-   //assert(glGetError() == GL_NO_ERROR);
+   assert(glGetError() == GL_NO_ERROR);
 }
 
 // Given a vector of shapes which has already been read from an obj file
