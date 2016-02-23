@@ -8,20 +8,18 @@ void window_size_callback(GLFWwindow* window, int w, int h){
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-   // Roll shark along X axis
-	if (key == GLFW_KEY_I && action == GLFW_PRESS)
-	   SharkRotX += .08;
-	if (key == GLFW_KEY_K && action == GLFW_PRESS)
-	   SharkRotX -= .08;
-	// Rotate shark around Y axis -- BROKEN
-	if (key == GLFW_KEY_J && action == GLFW_PRESS)
-	   SharkRotY += .08;
-	if (key == GLFW_KEY_L && action == GLFW_PRESS)
-	   SharkRotY -= .08;
+   // Simple text/user interaction - prints faces
+	if (key == GLFW_KEY_H && action == GLFW_PRESS) {
+	   happy = 1.0;
+	   sound->playCorrectSound();
+	}
+	if (key == GLFW_KEY_S && action == GLFW_PRESS) {
+	   sad = 1.0;
+	   sound->playIncorrectSound();
+	}
 }
 
 GLuint loadBMP_custom(const char * imagepath){
-
 	printf("Reading image %s\n", imagepath);
 
 	// Data read from the header of the BMP file
@@ -105,30 +103,16 @@ GLuint loadBMP_custom(const char * imagepath){
 
 void initGL()
 {   
-   texture = loadBMP_custom("countdown1.bmp");
+   // Load texture
+   texture = loadBMP_custom("ocean.bmp");
    
-   uHead = new Shape(materials);
-   uHead->loadShapes("SharkSubdivParts/Head_Upper.obj");
-   lHead = new Shape(materials);
-   lHead->loadShapes("SharkSubdivParts/Head_Lower.obj");
-   lsFin = new Shape(materials);
-   lsFin->loadShapes("SharkSubdivParts/SideFin_L.obj");
-   rsFin = new Shape(materials);
-   rsFin->loadShapes("SharkSubdivParts/SideFin_R.obj");
-   tbFin = new Shape(materials);
-   tbFin->loadShapes("SharkSubdivParts/TopFin.obj");
-   fBody = new Shape(materials);
-   fBody->loadShapes("SharkSubdivParts/Body_Front.obj");
-   mBody = new Shape(materials);
-   mBody->loadShapes("SharkSubdivParts/Body_Mid.obj");
-   rBody = new Shape(materials);
-   rBody->loadShapes("SharkSubdivParts/Body_Rear.obj");
-   btFin = new Shape(materials);
-   btFin->loadShapes("SharkSubdivParts/BackFin_Top.obj");
-   bbFin = new Shape(materials);
-   bbFin->loadShapes("SharkSubdivParts/BackFin_Bottom.obj");
+   // Create sharks
+   for (int i = 0; i < NUM_SHARKS; i++) {
+      Shark *s = new Shark();
+      sharks.push_back(s);
+   }
    
-   // initialize shaders
+   // Initialize shaders
    shaders[SHADER_DEFAULT] = new Program();
    shaders[SHADER_DEFAULT]->setShaderNames(DEFAULT_VERT_SHADER, DEFAULT_FRAG_SHADER);
    shaders[SHADER_TEXT] = new Program();
@@ -149,8 +133,8 @@ void initGL()
    shaders[SHADER_DEFAULT]->init();
    shaders[SHADER_TEXT]->init();
    shaders[SHADER_BILLBOARD]->init();
-  
    
+   // Add shader variables
    h_aPosition = shaders[SHADER_DEFAULT]->addAttribute("aPosition");
    h_aNormal = shaders[SHADER_DEFAULT]->addAttribute("aNormal");
    h_uProjMatrix = shaders[SHADER_DEFAULT]->addUniform("uProjMatrix");
@@ -172,20 +156,14 @@ void initGL()
    shaders[SHADER_BILLBOARD]->addUniform("MV");
    shaders[SHADER_BILLBOARD]->addUniform("scale");
    shaders[SHADER_BILLBOARD]->addUniform("color");
-
-   uHead->initObj();
-   lHead->initObj();
-   lsFin->initObj();
-   rsFin->initObj();
-   tbFin->initObj();
-   fBody->initObj();
-   mBody->initObj();
-   rBody->initObj();
-   btFin->initObj();
-   bbFin->initObj();
    
+   // Initialize font and sound objects, play background music
    fontEngine = new FontEngine(g_width, g_height, shaders[SHADER_TEXT], shaders[SHADER_DEFAULT]);
    fontEngine->init(shaders[SHADER_TEXT]->getPID());
+   
+   sound = new Sound();
+   sound->initSound();
+   sound->playBackgroundMusic();
 }
 
 inline void safe_glUniformMatrix4fv(const GLint handle, const GLfloat data[]) {
@@ -227,7 +205,7 @@ void drawSharkPiece(Shape *shp) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void drawShark() {
+void drawShark(Shark *s) {
    // Color varibales for shark
    glUniform3f(h_uMatAmb, 0.08, 0.03, 0.1);
    glUniform3f(h_uMatDif, 0.55, 0.51, 0.51);
@@ -238,84 +216,84 @@ void drawShark() {
    // FRONT BODY
    ModelTrans.loadIdentity();
    // Zoom out from shark
-	ModelTrans.translate(glm::vec3(0, 0, -10)); // To move entire shark back
+	ModelTrans.translate(glm::vec3(0, 0, s->zoom)); // To move entire shark back
    // Roll whole shark
-	ModelTrans.rotate(135+SharkRotX, glm::vec3(1, 0, 0)); // Wtf @ 135 ?
+	ModelTrans.rotate(135, glm::vec3(1, 0, 0)); // Wtf @ 135 ?
 	// Putting this here rotates shark around middle 
-	ModelTrans.translate(glm::vec3(-.65, 0, 0)); 
-	ModelTrans.rotate(fbAngle, glm::vec3(0, 1, 0));
+	ModelTrans.translate(s->loc); 
+	ModelTrans.rotate(s->fbAngle+s->yRot, glm::vec3(0, 1, 0));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.28);
-	drawSharkPiece(fBody);
+	drawSharkPiece(s->fBody);
 	ModelTrans.popMatrix();
 	// RIGHT FIN
 	ModelTrans.translate(glm::vec3(.06, -.23, -.39));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.28);
-	drawSharkPiece(rsFin);
+	drawSharkPiece(s->rsFin);
 	ModelTrans.popMatrix();
 	// LEFT FIN
    ModelTrans.translate(glm::vec3(0, 0, .78));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.28);
-	drawSharkPiece(lsFin);
+	drawSharkPiece(s->lsFin);
 	ModelTrans.popMatrix();
 	// LOWER HEAD
 	ModelTrans.translate(glm::vec3(-.45, .215, -.39));
-	ModelTrans.rotate(hdAngle, glm::vec3(0, 1, 0));
+	ModelTrans.rotate(s->hdAngle, glm::vec3(0, 1, 0));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.26);
-	drawSharkPiece(lHead);
+	drawSharkPiece(s->lHead);
 	ModelTrans.popMatrix();
 	// UPPER HEAD
 	ModelTrans.translate(glm::vec3(-.23, .03, 0));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.24);
-	drawSharkPiece(uHead);
+	drawSharkPiece(s->uHead);
 	ModelTrans.popMatrix();
    
 	// MID BODY
 	ModelTrans.translate(glm::vec3(.6, -.03, 0));
-	ModelTrans.rotate(mbAngle, glm::vec3(0, 1, 0));
+	ModelTrans.rotate(s->mbAngle, glm::vec3(0, 1, 0));
 	ModelTrans.translate(glm::vec3(.6, 0, 0));
 	ModelTrans.pushMatrix();     
 	ModelTrans.scale(.38);
-	drawSharkPiece(mBody);
+	drawSharkPiece(s->mBody);
 	ModelTrans.popMatrix();
 	// TOP FIN
 	ModelTrans.translate(glm::vec3(-.15, .4, 0));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.2);
-	drawSharkPiece(tbFin);
+	drawSharkPiece(s->tbFin);
 	ModelTrans.popMatrix();
 	// REAR BODY
 	ModelTrans.translate(glm::vec3(.41, -.38, 0));
-	ModelTrans.rotate(rbAngle, glm::vec3(0, 1, 0));
+	ModelTrans.rotate(s->rbAngle, glm::vec3(0, 1, 0));
 	ModelTrans.translate(glm::vec3(.41, 0, 0));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.32);
-	drawSharkPiece(rBody);
+	drawSharkPiece(s->rBody);
 	ModelTrans.popMatrix();
 	// BACK TOP FIN
 	ModelTrans.translate(glm::vec3(.27, .16, 0));
-	ModelTrans.rotate(tfAngle, glm::vec3(0, 1, 0));
+	ModelTrans.rotate(s->tfAngle, glm::vec3(0, 1, 0));
 	ModelTrans.translate(glm::vec3(.3, 0, 0));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.26);
-	drawSharkPiece(btFin);
+	drawSharkPiece(s->btFin);
 	ModelTrans.popMatrix();
 	// BACK BOTTOM FIN
 	ModelTrans.translate(glm::vec3(-.01, -.43, 0));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.26);
-	drawSharkPiece(bbFin);
+	drawSharkPiece(s->bbFin);
 	ModelTrans.popMatrix();
 }
 
 void drawBackground() {
    glLoadIdentity();
    glEnable(GL_TEXTURE_2D);
-   glBindTexture( GL_TEXTURE_2D, texture ); 
+   glBindTexture(GL_TEXTURE_2D, texture); 
    glDisable(GL_DEPTH_TEST);
    glOrtho(0, g_width, g_height, 0, 1, -1);
    glScalef(1, -1, 1);
@@ -325,8 +303,7 @@ void drawBackground() {
    const int iw = 1024;
    const int ih = 768;
 
-   //glPushMatrix();
-   glTranslatef( -iw/1024, -ih/16, 0 );
+   glTranslatef(-iw/1024, -ih/16, 0);
    glBegin(GL_QUADS);
       glTexCoord2i(0,0); glVertex2i(0, 0);
       glTexCoord2i(1,0); glVertex2i(iw, 0);
@@ -334,6 +311,23 @@ void drawBackground() {
       glTexCoord2i(0,1); glVertex2i(0, ih);
    glEnd();
    glEnable(GL_DEPTH_TEST);
+}
+
+void react() {
+   // Prints happy or sad smiley faces in the center of the screen
+   fontEngine->useFont("oswald", 36);   
+   if (happy > 0) {
+      char buff[5];
+      sprintf(buff, ":)");
+      fontEngine->display(glm::vec4(1.0, 0.9, 0.1, happy), buff, (fontEngine->getTextWidth(buff)/2), 1-happy);
+      happy -= decrement;
+   }
+   if (sad > 0) {
+      char buff[5];
+      sprintf(buff, ":("); 
+      fontEngine->display(glm::vec4(0.0, 0.3, 0.9, sad), buff, (fontEngine->getTextWidth(buff)/2), 1-sad);
+      sad -= decrement;      
+   }
 }
 
 void drawGL()
@@ -347,7 +341,6 @@ void drawGL()
    drawBackground();
 
    // Use our GLSL program
-   //glUseProgram(ShadeProg);
    shaders[SHADER_DEFAULT]->bind();
    glUniform3f(h_uLightPos1, g_light1.x, g_light1.y, g_light1.z);
    glUniform3f(h_uLightPos2, g_light2.x, g_light2.y, g_light2.z);
@@ -355,25 +348,20 @@ void drawGL()
    SetProjectionMatrix();
    ModelTrans.useModelViewMatrix();
    
-   // Increment the variable that determines the speed of the rotations
-   theta += thetaAdd;
-   
-   hdAngle = -cos(theta)*.07;
-	fbAngle = -cos(theta)*.1;
-	mbAngle = cos(theta)*.2;
-	rbAngle = cos(theta)*.25;
-	tfAngle = cos(theta)*.3;
-	
    // Draw shark
-   drawShark();
+   for(std::vector<Shark *>::iterator s = sharks.begin(); s != sharks.end(); ++s) {
+      drawShark(*s);
+      (*s)->update();
+   }
    shaders[SHADER_DEFAULT]->unbind();
    
-   //gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+   react();
    
+   // Prints instructions for keyboard interaction
    char buff[25];
-   sprintf(buff, "SHARKTASTIC!!!");
-   fontEngine->useFont("caviar", 100);   
-   fontEngine->display(glm::vec4(0.0, 0.0, 1.0, 1.0), buff, 0-(fontEngine->getTextWidth(buff)/2), 0);      
+   sprintf(buff, "Happy (H)            Sad (S)");
+   fontEngine->useFont("caviar", 36);   
+   fontEngine->display(glm::vec4(1.0, 0.5, 0.3, 1.0), buff, 0-(fontEngine->getTextWidth(buff)/2), 1-(fontEngine->getTextHeight(buff)));
    
    glUseProgram(0); 
    //assert(glGetError() == GL_NO_ERROR);
@@ -415,14 +403,10 @@ int main(int argc, char **argv) {
 
    // Ensure we can capture the escape key being pressed below
    glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-
    glEnable (GL_BLEND);
    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-   
    initGL();
-   //installShaders("vert.glsl", "frag.glsl");
-
-	glClearColor(0.0f, 0.1f, 0.5f, 1.0f);
+   glClearColor(0.0f, 0.1f, 0.5f, 1.0f);
 
    do{
       drawGL();

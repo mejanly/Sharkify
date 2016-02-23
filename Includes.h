@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include "tiny_obj_loader.h"
-#include "Shape.h"
 #include "GLSL.h"
 #include "RenderingHelper.h"
 #include "glm/glm.hpp"
@@ -16,7 +15,10 @@
 #include "glm/gtc/type_ptr.hpp" //value_ptr
 #include "Program.h"
 #include "FontEngine.h"
+#include "Sound.h"
+#include "Shark.h"
 
+#define NUM_SHARKS 10
 #define SHADER_DEFAULT "default"
 #define SHADER_TEXT "text"
 #define SHADER_BILLBOARD "billboard"
@@ -30,7 +32,6 @@
 using namespace std;
 
 GLFWwindow* window;
-vector<tinyobj::material_t> materials;
 GLuint ShadeProg;
 RenderingHelper ModelTrans;
 
@@ -40,32 +41,7 @@ int g_height = 768;
 glm::vec3 g_light1(-5, 8, 0);
 glm::vec3 g_light2(5, 8, 0);
 
-// Shark pieces
-Shape *uHead;
-Shape *lHead;
-Shape *fBody;
-Shape *mBody;
-Shape *rBody;
-Shape *lsFin;
-Shape *rsFin;
-Shape *tbFin;
-Shape *btFin;
-Shape *bbFin;
-
-// An angle of rotation for each piece
-float hdAngle = 0;
-float fbAngle = 0;
-float mbAngle = 0;
-float rbAngle = 0;
-float tfAngle = 0;
-
-// Whole shark rotation variables
-float SharkRotX = 0.0;
-float SharkRotY = 0.0;
-
-// Determines the speed of the rotation
-float theta = 0;
-float thetaAdd = .05;
+vector<Shark *> sharks;
 
 // Shader variables
 GLint h_aPosition;
@@ -78,17 +54,18 @@ GLint h_uLightPos2;
 GLint h_uMatAmb, h_uMatDif, h_uMatSpec, h_uMatShine;
 GLint h_uLightInts;
 
+// Different shaders (text, default, billboard for texture)
 map<string, Program*> shaders;
 
+// The font and sound objects
 FontEngine *fontEngine;
-float vertices[] = {
-//  Position      Color             Texcoords
-    -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Top-left
-     0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Top-right
-     0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
-    -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
-};
+Sound *sound;
 
+// Texture for the background
 GLuint texture;
+
+float happy;
+float sad;
+float decrement = .008;
 
 #endif

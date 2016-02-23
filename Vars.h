@@ -1,5 +1,5 @@
-#ifndef __INCLUDES__
-#define __INCLUDES__
+#ifndef __Vars__
+#define __Vars__
 
 #include "GL/glew.h"
 #include "tiny_obj_loader.h"
