@@ -1,5 +1,5 @@
 #ifndef __SHAPE__
-#define __SHAPE
+#define __SHAPE__
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -27,7 +27,7 @@ class Shape {
 	   std::vector<tinyobj::shape_t> shapes;
 	   vector<tinyobj::material_t> materials;
 	   GLuint posBufObj; 
-	   GLuint norBufObj; 
+	   GLuint norBufObj;
 	   GLuint indBufObj;
 	   
 	   void resize_obj();

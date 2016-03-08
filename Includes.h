@@ -18,7 +18,7 @@
 #include "Sound.h"
 #include "Shark.h"
 
-#define NUM_SHARKS 10
+#define NUM_SHARKS 6
 #define SHADER_DEFAULT "default"
 #define SHADER_TEXT "text"
 #define SHADER_BILLBOARD "billboard"
@@ -64,8 +64,10 @@ Sound *sound;
 // Texture for the background
 GLuint texture;
 
+// TODO These should be moved...
 float happy;
 float sad;
 float decrement = .008;
+float sAlpha;
 
 #endif

@@ -9,18 +9,25 @@ void window_size_callback(GLFWwindow* window, int w, int h){
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
    // Simple text/user interaction - prints faces
-	if (key == GLFW_KEY_H && action == GLFW_PRESS) {
+	if (key == GLFW_KEY_J && action == GLFW_PRESS) {
 	   happy = 1.0;
 	   sound->playCorrectSound();
 	}
-	if (key == GLFW_KEY_S && action == GLFW_PRESS) {
+	if (key == GLFW_KEY_A && action == GLFW_PRESS) {
 	   sad = 1.0;
 	   sound->playIncorrectSound();
 	}
+	if (key == GLFW_KEY_S && action == GLFW_PRESS) {
+	   for (int i = 0; i < 3; i++) {
+	      Shark *s = new Shark();
+         sharks.push_back(s);
+      }
+      sound->playSplatSound();
+      sAlpha = 1.5;
+  	}	
 }
 
 GLuint loadBMP_custom(const char * imagepath){
-
 	printf("Reading image %s\n", imagepath);
 
 	// Data read from the header of the BMP file
@@ -118,8 +125,8 @@ void initGL()
    shaders[SHADER_DEFAULT]->setShaderNames(DEFAULT_VERT_SHADER, DEFAULT_FRAG_SHADER);
    shaders[SHADER_TEXT] = new Program();
    shaders[SHADER_TEXT]->setShaderNames(TEXT_VERT_SHADER, TEXT_FRAG_SHADER);
-   shaders[SHADER_BILLBOARD] = new Program();
-   shaders[SHADER_BILLBOARD]->setShaderNames(BILLBOARD_VERT_SHADER, BILLBOARD_FRAG_SHADER);
+   //shaders[SHADER_BILLBOARD] = new Program();
+   //shaders[SHADER_BILLBOARD]->setShaderNames(BILLBOARD_VERT_SHADER, BILLBOARD_FRAG_SHADER);
 
    // Set the background color
    glClearColor(0.0f, 0.1f, 0.5f, 1.0f);
@@ -133,7 +140,7 @@ void initGL()
    printf("Initializing shaders.\n");
    shaders[SHADER_DEFAULT]->init();
    shaders[SHADER_TEXT]->init();
-   shaders[SHADER_BILLBOARD]->init();
+   //shaders[SHADER_BILLBOARD]->init();
    
    // Add shader variables
    h_aPosition = shaders[SHADER_DEFAULT]->addAttribute("aPosition");
@@ -151,12 +158,12 @@ void initGL()
    shaders[SHADER_TEXT]->addUniform("uTex");
    shaders[SHADER_TEXT]->addUniform("uCol");
    
-   shaders[SHADER_BILLBOARD]->addAttribute("vertPosition");
+   /*shaders[SHADER_BILLBOARD]->addAttribute("vertPosition");
    shaders[SHADER_BILLBOARD]->addAttribute("vertTexCoords");
    shaders[SHADER_BILLBOARD]->addUniform("P");
    shaders[SHADER_BILLBOARD]->addUniform("MV");
    shaders[SHADER_BILLBOARD]->addUniform("scale");
-   shaders[SHADER_BILLBOARD]->addUniform("color");
+   shaders[SHADER_BILLBOARD]->addUniform("color");*/
    
    // Initialize font and sound objects, play background music
    fontEngine = new FontEngine(g_width, g_height, shaders[SHADER_TEXT], shaders[SHADER_DEFAULT]);
@@ -331,6 +338,19 @@ void react() {
    }
 }
 
+void sharkify() {
+   char buff[25];
+   fontEngine->useFont("caviar", 36);   
+   sprintf(buff, "SHARKIFY!!! (S)");
+   if (sAlpha > 0) {
+      fontEngine->display(glm::vec4(1.0, 0.0, 0.0, cos(sAlpha)), buff, 0-(fontEngine->getTextWidth(buff)/2), 1-(fontEngine->getTextHeight(buff)*2.2));
+      sAlpha -= decrement;
+   }
+   else {
+      fontEngine->display(glm::vec4(1.0, 0.5, 0.3, 1.0), buff, 0-(fontEngine->getTextWidth(buff)/2), 1-(fontEngine->getTextHeight(buff)*2.2));
+   }
+}   
+
 void drawGL()
 {
    int i;
@@ -360,9 +380,11 @@ void drawGL()
    
    // Prints instructions for keyboard interaction
    char buff[25];
-   sprintf(buff, "Happy (H)            Sad (S)");
+   sprintf(buff, "Joy (J)            Anguish (A)");
    fontEngine->useFont("caviar", 36);   
    fontEngine->display(glm::vec4(1.0, 0.5, 0.3, 1.0), buff, 0-(fontEngine->getTextWidth(buff)/2), 1-(fontEngine->getTextHeight(buff)));
+   
+   sharkify();
    
    glUseProgram(0); 
    //assert(glGetError() == GL_NO_ERROR);

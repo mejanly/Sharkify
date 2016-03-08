@@ -37,7 +37,7 @@ FontEngine.o: FontEngine.cpp FontEngine.h
 tiny_obj_loader.o: tiny_obj_loader.cc tiny_obj_loader.h
 	$(CC) $(CFLAGS) -c tiny_obj_loader.cc
 
-Shape.o: Shape.cpp Shape.h Vars.h
+Shape.o: Shape.cpp Shape.h
 	$(CC) $(CFLAGS) -c Shape.cpp
 
 GLSL.o: GLSL.cpp GLSL.h GLIncludes.h

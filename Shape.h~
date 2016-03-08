@@ -20,13 +20,14 @@ class Shape {
 		void initObj();
 		GLuint gPos() {return posBufObj;}
 		GLuint gNor() {return norBufObj;}
-		GLuint gInd() {return indBufObj;}		
+		GLuint gInd() {return indBufObj;}	
+		std::vector<tinyobj::shape_t> gShapes() {return shapes;}	
 		
 	private:
 	   std::vector<tinyobj::shape_t> shapes;
 	   vector<tinyobj::material_t> materials;
 	   GLuint posBufObj; 
-	   GLuint norBufObj; 
+	   GLuint norBufObj;
 	   GLuint indBufObj;
 	   
 	   void resize_obj();
