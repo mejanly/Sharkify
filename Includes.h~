@@ -63,10 +63,13 @@ Sound *sound;
 
 // Texture for the background
 GLuint texture;
+ParticleTexture ptexture;
+ParticleSystem *partSys;
 
 // TODO These should be moved...
 float happy;
 float sad;
 float decrement = .008;
+float sAlpha;
 
 #endif

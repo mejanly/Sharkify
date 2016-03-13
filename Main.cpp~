@@ -23,7 +23,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
          sharks.push_back(s);
       }
       sound->playSplatSound();
-      sAlpha = 1.5;
+      sAlpha = 0.75;
   	}	
 }
 
@@ -125,8 +125,8 @@ void initGL()
    shaders[SHADER_DEFAULT]->setShaderNames(DEFAULT_VERT_SHADER, DEFAULT_FRAG_SHADER);
    shaders[SHADER_TEXT] = new Program();
    shaders[SHADER_TEXT]->setShaderNames(TEXT_VERT_SHADER, TEXT_FRAG_SHADER);
-   //shaders[SHADER_BILLBOARD] = new Program();
-   //shaders[SHADER_BILLBOARD]->setShaderNames(BILLBOARD_VERT_SHADER, BILLBOARD_FRAG_SHADER);
+   shaders[SHADER_BILLBOARD] = new Program();
+   shaders[SHADER_BILLBOARD]->setShaderNames(BILLBOARD_VERT_SHADER, BILLBOARD_FRAG_SHADER);
 
    // Set the background color
    glClearColor(0.0f, 0.1f, 0.5f, 1.0f);
@@ -137,10 +137,16 @@ void initGL()
    
    printf("Shaders loaded.\n");
 
+	printf("Initializing particle texture.\n");
+	ptexture.setFilename("textures/alpha.bmp");
+	ptexture.setUnit(0);
+	ptexture.setName("alphaTexture");
+	ptexture.init();
+
    printf("Initializing shaders.\n");
    shaders[SHADER_DEFAULT]->init();
    shaders[SHADER_TEXT]->init();
-   //shaders[SHADER_BILLBOARD]->init();
+   shaders[SHADER_BILLBOARD]->init();
    
    // Add shader variables
    h_aPosition = shaders[SHADER_DEFAULT]->addAttribute("aPosition");
@@ -158,16 +164,20 @@ void initGL()
    shaders[SHADER_TEXT]->addUniform("uTex");
    shaders[SHADER_TEXT]->addUniform("uCol");
    
-   /*shaders[SHADER_BILLBOARD]->addAttribute("vertPosition");
+   shaders[SHADER_BILLBOARD]->addAttribute("vertPosition");
    shaders[SHADER_BILLBOARD]->addAttribute("vertTexCoords");
    shaders[SHADER_BILLBOARD]->addUniform("P");
    shaders[SHADER_BILLBOARD]->addUniform("MV");
    shaders[SHADER_BILLBOARD]->addUniform("scale");
-   shaders[SHADER_BILLBOARD]->addUniform("color");*/
+   shaders[SHADER_BILLBOARD]->addUniform("color");
+	shaders[SHADER_BILLBOARD]->addTexture(&ptexture);
    
    // Initialize font and sound objects, play background music
    fontEngine = new FontEngine(g_width, g_height, shaders[SHADER_TEXT], shaders[SHADER_DEFAULT]);
    fontEngine->init(shaders[SHADER_TEXT]->getPID());
+
+	partSys = new ParticleSystem(shaders[SHADER_BILLBOARD]->getPID(), ptexture.getHandle());
+	partSys->init(shaders[SHADER_BILLBOARD]);
    
    sound = new Sound();
    sound->initSound();
@@ -226,7 +236,7 @@ void drawShark(Shark *s) {
    // Zoom out from shark
 	ModelTrans.translate(glm::vec3(0, 0, s->zoom)); // To move entire shark back
    // Roll whole shark
-	ModelTrans.rotate(135, glm::vec3(1, 0, 0)); // Wtf @ 135 ?
+	ModelTrans.rotate(0, glm::vec3(1, 0, 0));
 	// Putting this here rotates shark around middle 
 	ModelTrans.translate(s->loc); 
 	ModelTrans.rotate(s->fbAngle+s->yRot, glm::vec3(0, 1, 0));
@@ -376,6 +386,8 @@ void drawGL()
    }
    shaders[SHADER_DEFAULT]->unbind();
    
+	partSys->step(shaders[SHADER_BILLBOARD], ModelTrans, glm::perspective(50.0f, (float)g_width/g_height, 0.1f, 100.f));
+
    react();
    
    // Prints instructions for keyboard interaction

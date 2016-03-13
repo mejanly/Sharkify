@@ -70,12 +70,12 @@ bool Program::init()
 		return false;
 	}
 	
-	/*addAttribute("vertPosition");
+	addAttribute("vertPosition");
 	addAttribute("vertTexCoords");
 	addUniform("P");
 	addUniform("MV");
 	addUniform("scale");
-	addUniform("color");*/
+	addUniform("color");
 	
 	GLSL::printError();
 	assert(glGetError() == GL_NO_ERROR);
@@ -85,20 +85,20 @@ bool Program::init()
 void Program::bind()
 {
 	glUseProgram(pid);
-	/*if (hasTex) {
+	if (hasTex) {
 	   for(map<string,ParticleTexture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
 		   it->second->bind();
 	   }
-	}*/
+	}
 }
 
 void Program::unbind()
 {
-   /*if (hasTex) {
+   if (hasTex) {
 	   for(map<string,ParticleTexture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
 		   it->second->unbind();
 	   }
-	}*/
+	}
 	glUseProgram(0);
 }
 
@@ -114,14 +114,14 @@ GLint Program::addUniform(const string &name)
 	return uniforms[name];
 }
 
-/*void Program::addTexture(ParticleTexture *texture)
+void Program::addTexture(ParticleTexture *texture)
 {
 	const string &name = texture->getName();
 	GLint handle = GLSL::getUniformLocation(pid, name.c_str());
 	texture->setHandle(handle);
 	textures[name] = texture;
 	hasTex = true;
-}*/
+}
 
 GLint Program::getAttribute(const string &name) const
 {
@@ -143,7 +143,7 @@ GLint Program::getUniform(const string &name) const
 	return uniform->second;
 }
 
-/*ParticleTexture *Program::getTexture(const string &name) const
+ParticleTexture *Program::getTexture(const string &name) const
 {
    if (!hasTex) {
       return NULL;
@@ -154,4 +154,4 @@ GLint Program::getUniform(const string &name) const
 		return 0;
 	}
 	return texture->second;
-}*/
+}

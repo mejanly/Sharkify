@@ -85,20 +85,20 @@ bool Program::init()
 void Program::bind()
 {
 	glUseProgram(pid);
-	/*if (hasTex) {
+	if (hasTex) {
 	   for(map<string,ParticleTexture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
 		   it->second->bind();
 	   }
-	}*/
+	}
 }
 
 void Program::unbind()
 {
-   /*if (hasTex) {
+   if (hasTex) {
 	   for(map<string,ParticleTexture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
 		   it->second->unbind();
 	   }
-	}*/
+	}
 	glUseProgram(0);
 }
 
@@ -143,7 +143,7 @@ GLint Program::getUniform(const string &name) const
 	return uniform->second;
 }
 
-/*ParticleTexture *Program::getTexture(const string &name) const
+ParticleTexture *Program::getTexture(const string &name) const
 {
    if (!hasTex) {
       return NULL;
@@ -154,4 +154,4 @@ GLint Program::getUniform(const string &name) const
 		return 0;
 	}
 	return texture->second;
-}*/
+}

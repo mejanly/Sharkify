@@ -17,6 +17,7 @@
 #include "FontEngine.h"
 #include "Sound.h"
 #include "Shark.h"
+#include "ParticleSystem.h"
 
 #define NUM_SHARKS 6
 #define SHADER_DEFAULT "default"
@@ -63,6 +64,8 @@ Sound *sound;
 
 // Texture for the background
 GLuint texture;
+ParticleTexture ptexture;
+ParticleSystem *partSys;
 
 // TODO These should be moved...
 float happy;

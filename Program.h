@@ -15,6 +15,7 @@
 #include "GLSL.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "ParticleTexture.h"
 
 //class Texture;
 
@@ -31,10 +32,10 @@ public:
 
 	GLint addAttribute(const std::string &name);
 	GLint addUniform(const std::string &name);
-	//void addTexture(ParticleTexture *texture);
+	void addTexture(ParticleTexture *texture);
 	GLint getAttribute(const std::string &name) const;
 	GLint getUniform(const std::string &name) const;
-	//ParticleTexture *getTexture(const std::string &name) const;
+	ParticleTexture *getTexture(const std::string &name) const;
 	GLint getPID() { return pid; };
 	
 protected:
@@ -45,7 +46,7 @@ private:
 	GLuint pid;
 	std::map<std::string,GLint> attributes;
 	std::map<std::string,GLint> uniforms;
-	//std::map<std::string,ParticleTexture*> textures;
+	std::map<std::string,ParticleTexture*> textures;
 	
 	bool hasTex;
 };

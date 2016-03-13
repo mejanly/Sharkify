@@ -20,7 +20,7 @@ Shark::Shark() {
    // Rotates the shark around the Y based on which direction
    // it is facing
    if (x < 0) {
-      yRot = 135;
+      yRot = 180;
       speed *= -1;
    }
    else {

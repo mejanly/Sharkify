@@ -2,7 +2,7 @@
 #define __Sound__
 
 #include "Headers.h"
-#include <irrKlang.h>
+#include "irrKlang-64bit-1.5.0/include/irrKlang.h"
    
 using namespace irrklang;
 
