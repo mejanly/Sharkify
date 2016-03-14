@@ -176,7 +176,7 @@ void initGL()
    fontEngine = new FontEngine(g_width, g_height, shaders[SHADER_TEXT], shaders[SHADER_DEFAULT]);
    fontEngine->init(shaders[SHADER_TEXT]->getPID());
 
-	partSys = new ParticleSystem(shaders[SHADER_BILLBOARD]->getPID(), ptexture.getHandle());
+	partSys = new ParticleSystem(shaders[SHADER_BILLBOARD]->getPID(), ptexture.getTid());
 	partSys->init(shaders[SHADER_BILLBOARD]);
    
    sound = new Sound();
@@ -187,6 +187,10 @@ void initGL()
 inline void safe_glUniformMatrix4fv(const GLint handle, const GLfloat data[]) {
   if (handle >= 0)
     glUniformMatrix4fv(handle, 1, GL_FALSE, data);
+}
+
+glm::mat4 getProjectionMatrix() {
+	return glm::perspective(50.0f, (float)g_width/g_height, 0.1f, 100.f);
 }
 
 /* projection matrix */
@@ -386,7 +390,9 @@ void drawGL()
    }
    shaders[SHADER_DEFAULT]->unbind();
    
-	partSys->step(shaders[SHADER_BILLBOARD]);
+	glm::mat4 MV = glm::lookAt(glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+	partSys->step(shaders[SHADER_BILLBOARD], MV, getProjectionMatrix());
 
    react();
    

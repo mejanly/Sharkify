@@ -62,6 +62,8 @@ public:
 	void ortho(float left, float right, float bottom, float top, float zNear, float zFar);
 	void frustum(float left, float right, float bottom, float top, float zNear, float zFar);
 	void lookAt(vec3 eye, vec3 target, vec3 up);
+
+	//mat4 getModelViewMatrix() {return modelViewMatrix;};
 };
 
 #endif /* RenderingHelper_H_ */

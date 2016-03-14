@@ -19,7 +19,7 @@ public:
 	virtual ~Particle();
 	void load();
 	void init(Program *prog);
-	void draw(MatrixStack *MV) const;
+	void draw(glm::mat4 MV) const;//MatrixStack *MV) const;
 	void rebirth(float t);
 	void update(float t, float h, const glm::vec3 &g);
 	const glm::vec3 &getPosition() const { return x; };

@@ -18,7 +18,7 @@ class ParticleSystem {
       virtual ~ParticleSystem();
 
       void init(Program* prog);
-      void step(Program* prog);
+      void step(Program* prog, glm::mat4 MV, glm::mat4 P);
       
    private:
       vector<Particle*> foodParticles;
@@ -26,8 +26,6 @@ class ParticleSystem {
 		GLuint partTex;
 
 		float randFloat(float l, float h);
-		void applyProjectionMatrix(MatrixStack* P);
-		void applyViewMatrix(MatrixStack* MV);
 
  		// time info for particles
       float t, t0_disp, t_disp;

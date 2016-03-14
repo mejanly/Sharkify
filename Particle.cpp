@@ -121,7 +121,7 @@ void Particle::init(Program *prog)
 	//assert(glGetError() == GL_NO_ERROR);
 }
 
-void Particle::draw(MatrixStack *MV) const
+void Particle::draw(glm::mat4 MV) const //MatrixStack *MV) const
 {
 	// Don't draw if at the origin
 	if(glm::dot(x, x) < 0.01f) {
@@ -152,12 +152,13 @@ void Particle::draw(MatrixStack *MV) const
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indBufID);
 	
 	// Transformation matrix
-	MV->pushMatrix();
+	//MV->pushMatrix();
 	//printf("Drawing particle at: ");
 	//printVec3(x);
-	MV->translate(x);
-	glUniformMatrix4fv(prog->getUniform("MV"), 1, GL_FALSE, glm::value_ptr(MV->topMatrix()));
-	MV->popMatrix();
+	//MV->translate(x);
+	MV = glm::translate(MV, x);
+	glUniformMatrix4fv(prog->getUniform("MV"), 1, GL_FALSE, glm::value_ptr(MV));//->topMatrix()));
+	//MV->popMatrix();
 	
 	// Color and scale
 	glUniform4fv(prog->getUniform("color"), 1, glm::value_ptr(color));
