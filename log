@@ -1,0 +1,150 @@
+==6750== Memcheck, a memory error detector
+==6750== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==6750== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==6750== Command: ./shark
+==6750== 
+==6750== Syscall param writev(vector[...]) points to uninitialised byte(s)
+==6750==    at 0x6B15100: __writev_nocancel (syscall-template.S:81)
+==6750==    by 0x848AEAA: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==6750==    by 0x848B2A0: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==6750==    by 0x848B324: xcb_writev (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==6750==    by 0x53B34AD: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==6750==    by 0x53B39A1: _XReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==6750==    by 0x53AF48C: XSync (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==6750==    by 0x462043: _glfwReleaseXErrorHandler (in /home/megan/Documents/sp/Sharkify/shark)
+==6750==    by 0x461F9D: createNULLCursor (in /home/megan/Documents/sp/Sharkify/shark)
+==6750==    by 0x46215A: _glfwPlatformInit (in /home/megan/Documents/sp/Sharkify/shark)
+==6750==    by 0x45D58C: glfwInit (in /home/megan/Documents/sp/Sharkify/shark)
+==6750==    by 0x40ABE3: main (Main.cpp:425)
+==6750==  Address 0x9724f2a is 58 bytes inside a block of size 16,384 alloc'd
+==6750==    at 0x4C2DB95: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6750==    by 0x53A3692: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==6750==    by 0x4620CD: _glfwPlatformInit (in /home/megan/Documents/sp/Sharkify/shark)
+==6750==    by 0x45D58C: glfwInit (in /home/megan/Documents/sp/Sharkify/shark)
+==6750==    by 0x40ABE3: main (Main.cpp:425)
+==6750== 
+==6750== Conditional jump or move depends on uninitialised value(s)
+==6750==    at 0x4C2EFA9: strlen (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6750==    by 0x6AA33BD: strdup (strdup.c:41)
+==6750==    by 0x4622DF: openJoystickDevice (in /home/megan/Documents/sp/Sharkify/shark)
+==6750==    by 0x462743: _glfwInitJoysticks (in /home/megan/Documents/sp/Sharkify/shark)
+==6750==    by 0x46217B: _glfwPlatformInit (in /home/megan/Documents/sp/Sharkify/shark)
+==6750==    by 0x45D58C: glfwInit (in /home/megan/Documents/sp/Sharkify/shark)
+==6750==    by 0x40ABE3: main (Main.cpp:425)
+==6750== 
+==6750== Conditional jump or move depends on uninitialised value(s)
+==6750==    at 0x4C2EFB8: strlen (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6750==    by 0x6AA33BD: strdup (strdup.c:41)
+==6750==    by 0x4622DF: openJoystickDevice (in /home/megan/Documents/sp/Sharkify/shark)
+==6750==    by 0x462743: _glfwInitJoysticks (in /home/megan/Documents/sp/Sharkify/shark)
+==6750==    by 0x46217B: _glfwPlatformInit (in /home/megan/Documents/sp/Sharkify/shark)
+==6750==    by 0x45D58C: glfwInit (in /home/megan/Documents/sp/Sharkify/shark)
+==6750==    by 0x40ABE3: main (Main.cpp:425)
+==6750== 
+==6750== Invalid write of size 8
+==6750==    at 0x431D43: std::_Vector_base<tinyobj::material_t, std::allocator<tinyobj::material_t> >::_Vector_impl::_Vector_impl() (stl_vector.h:87)
+==6750==    by 0x4317E9: std::_Vector_base<tinyobj::material_t, std::allocator<tinyobj::material_t> >::_Vector_base() (stl_vector.h:125)
+==6750==    by 0x43123D: std::vector<tinyobj::material_t, std::allocator<tinyobj::material_t> >::vector() (stl_vector.h:257)
+==6750==    by 0x43002A: Shark::Shark() (Shark.cpp:3)
+==6750==    by 0x406E16: initGL() (Main.cpp:123)
+==6750==    by 0x40AD75: main (Main.cpp:459)
+==6750==  Address 0xe068c68 is 0 bytes after a block of size 168 alloc'd
+==6750==    at 0x4C2C12F: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6750==    by 0x406E0B: initGL() (Main.cpp:123)
+==6750==    by 0x40AD75: main (Main.cpp:459)
+==6750== 
+Reading image ocean.bmp
+0.045333 116.000000 0.102000
+0.030000 281.000000 0.067500
+0.034000 279.000000 0.076500
+0.032667 228.000000 0.073500
+0.032667 231.000000 0.073500
+0.050667 195.000000 0.114000
+Shaders loaded.
+Initializing particle texture.
+initing texture
+loading image
+Initializing shaders.
+Shader InfoLog:
+
+
+Shader InfoLog:
+
+
+Program InfoLog:
+
+
+WARN: vertPosition cannot be bound (it either doesn't exist or has been optimized away). safe_glAttrib calls will silently ignore it.
+
+WARN: vertTexCoords cannot be bound (it either doesn't exist or has been optimized away). safe_glAttrib calls will silently ignore it.
+
+WARN: P cannot be bound (it either doesn't exist or has been optimized away). safe_glUniform calls will silently ignore it.
+
+WARN: MV cannot be bound (it either doesn't exist or has been optimized away). safe_glUniform calls will silently ignore it.
+
+WARN: scale cannot be bound (it either doesn't exist or has been optimized away). safe_glUniform calls will silently ignore it.
+
+WARN: color cannot be bound (it either doesn't exist or has been optimized away). safe_glUniform calls will silently ignore it.
+
+Shader InfoLog:
+
+
+Shader InfoLog:
+
+
+Program InfoLog:
+
+
+WARN: vertPosition cannot be bound (it either doesn't exist or has been optimized away). safe_glAttrib calls will silently ignore it.
+
+WARN: vertTexCoords cannot be bound (it either doesn't exist or has been optimized away). safe_glAttrib calls will silently ignore it.
+
+WARN: P cannot be bound (it either doesn't exist or has been optimized away). safe_glUniform calls will silently ignore it.
+
+WARN: MV cannot be bound (it either doesn't exist or has been optimized away). safe_glUniform calls will silently ignore it.
+
+WARN: scale cannot be bound (it either doesn't exist or has been optimized away). safe_glUniform calls will silently ignore it.
+
+WARN: color cannot be bound (it either doesn't exist or has been optimized away). safe_glUniform calls will silently ignore it.
+
+==6750== Warning: noted but unhandled ioctl 0x6458 with no size/direction hints.
+==6750==    This could cause spurious value errors to appear.
+==6750==    See README_MISSING_SYSCALL_OR_IOCTL for guidance on writing a proper wrapper.
+Shader InfoLog:
+
+
+Shader InfoLog:
+
+
+Program InfoLog:
+
+
+irrKlang sound library version 1.5.0
+Using ALSA driver
+Generated a 1018 x 72 (71 kb) texture atlas
+Generated a 1009 x 70 (68 kb) texture atlas
+0.040000 219.000000 0.090000
+0.029333 243.000000 0.066000
+0.028667 130.000000 0.064500
+0.033333 233.000000 0.075000
+0.043333 269.000000 0.097500
+0.020000 295.000000 0.045000
+0.042000 120.000000 0.094500
+0.024000 207.000000 0.054000
+0.035333 170.000000 0.079500
+==6750== 
+==6750== HEAP SUMMARY:
+==6750==     in use at exit: 3,004,480 bytes in 3,933 blocks
+==6750==   total heap usage: 950,933 allocs, 947,000 frees, 1,299,854,328 bytes allocated
+==6750== 
+==6750== LEAK SUMMARY:
+==6750==    definitely lost: 55,260 bytes in 44 blocks
+==6750==    indirectly lost: 2,406,144 bytes in 1,348 blocks
+==6750==      possibly lost: 57,181 bytes in 1,285 blocks
+==6750==    still reachable: 485,895 bytes in 1,256 blocks
+==6750==         suppressed: 0 bytes in 0 blocks
+==6750== Rerun with --leak-check=full to see details of leaked memory
+==6750== 
+==6750== For counts of detected and suppressed errors, rerun with: -v
+==6750== Use --track-origins=yes to see where uninitialised values come from
+==6750== ERROR SUMMARY: 44 errors from 4 contexts (suppressed: 0 from 0)

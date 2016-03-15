@@ -1,6 +1,11 @@
 #include "Shark.h"
 
 Shark::Shark() {
+	hdAngle = 0.0;
+   fbAngle = 0.0;
+   mbAngle = 0.0;
+	rbAngle = 0.0;
+	tfAngle = 0.0;
    // Random numbers to determing where the shark is and how
    // fast it is. Basically all arbitrary
    zoom = ((rand() % 10 + 1) * -1.0);

@@ -49,9 +49,6 @@ RenderingHelper.o: RenderingHelper.cpp RenderingHelper.h
 Particle.o: Particle.cpp Particle.h
 	$(CC) $(CFLAGS) -c Particle.cpp
 
-ParticleTexture.o: ParticleTexture.cpp ParticleTexture.h
-	$(CC) $(CFLAGS) -c ParticleTexture.cpp ParticleTexture.h
-
 MatrixStack.o: MatrixStack.cpp MatrixStack.h
 	$(CC) $(CFLAGS) -c MatrixStack.cpp
 
