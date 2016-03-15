@@ -29,6 +29,8 @@ public:
    float mbAngle;
    float rbAngle;
    float tfAngle;
+	
+	float lhAngle;
 
    // Determines the speed of the rotation
    float theta;
@@ -42,7 +44,7 @@ public:
    glm::vec3 loc;
    
    void update();
-	void feed():
+	void feed();
     
 private:
    vector<tinyobj::material_t> materials;

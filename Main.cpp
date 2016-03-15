@@ -268,6 +268,7 @@ void drawShark(Shark *s) {
 	ModelTrans.translate(glm::vec3(-.45, .215, -.39));
 	ModelTrans.rotate(s->hdAngle, glm::vec3(0, 1, 0));
 	ModelTrans.pushMatrix();
+	ModelTrans.rotate(s->lhAngle, glm::vec3(0, 0, 1));
 	ModelTrans.scale(.26);
 	drawSharkPiece(s->lHead);
 	ModelTrans.popMatrix();
@@ -398,7 +399,7 @@ void drawGL()
    // Draw shark
    for(std::vector<Shark *>::iterator s = sharks.begin(); s != sharks.end(); ++s) {
       drawShark(*s);
-      (*s)->update();
+      (*s)->update(foodLife);
    }
    shaders[SHADER_DEFAULT]->unbind();
    

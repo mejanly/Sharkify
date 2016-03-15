@@ -29,6 +29,8 @@ public:
    float mbAngle;
    float rbAngle;
    float tfAngle;
+	
+	float lhAngle;
 
    // Determines the speed of the rotation
    float theta;
@@ -41,7 +43,7 @@ public:
    // Shark's location
    glm::vec3 loc;
    
-   void update();
+   void update(float isFeed);
 	void feed();
     
 private:

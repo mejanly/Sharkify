@@ -6,6 +6,8 @@ Shark::Shark() {
    mbAngle = 0.0;
 	rbAngle = 0.0;
 	tfAngle = 0.0;
+	lhAngle = 0.0;
+
    // Random numbers to determing where the shark is and how
    // fast it is. Basically all arbitrary
    zoom = ((rand() % 10 + 1) * -1.0);
@@ -66,7 +68,7 @@ Shark::Shark() {
    bbFin->initObj();
 }
 
-void Shark::update() {
+void Shark::update(float isFeed) {
    // Increment the variable that determines the speed of the rotations
    theta += thetaAdd;
    
@@ -77,14 +79,16 @@ void Shark::update() {
 	rbAngle = cos(theta)*10;
 	tfAngle = cos(theta)*13;
 
-	//printf("%lf\n", hdAngle);
+	if (isFeed > 0.0) {
+		lhAngle = cos(theta)*7;
+		isFeed -= .005;
+	}
 
    // Moves the shark in the x direction (traveling across the screen)
    loc = glm::vec3(loc.x-speed, loc.y, loc.z);
 }
 
 void Shark::feed() {
-	//theta *= 3;
 	thetaAdd *= 3;
 	speed *= 3;
 }
