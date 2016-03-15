@@ -5,6 +5,7 @@
 #include "Particle.h"
 #include "Program.h"
 #include "MatrixStack.h"
+#include "ParticleSorter.h"
 
 #define NUM_FOOD 1
 #define NUM_FOOD_PARTICLES 30

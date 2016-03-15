@@ -11,6 +11,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
    // Simple text/user interaction - prints faces
 	if (key == GLFW_KEY_J && action == GLFW_PRESS) {
 	   happy = 1.0;
+		foodLife = 3.0;
+		for(std::vector<Shark *>::iterator s = sharks.begin(); s != sharks.end(); ++s) {
+			(*s)->feed();
+		}
 	   sound->playCorrectSound();
 	}
 	if (key == GLFW_KEY_A && action == GLFW_PRESS) {
@@ -352,6 +356,14 @@ void react() {
    }
 }
 
+void feed() {
+	if (foodLife > 0.0) {
+		glm::mat4 MV = glm::lookAt(glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));   
+		partSys->step(shaders[SHADER_BILLBOARD], MV, getProjectionMatrix());
+		foodLife -= decrement;
+	}
+}
+
 void sharkify() {
    char buff[25];
    fontEngine->useFont("caviar", 36);   
@@ -390,10 +402,6 @@ void drawGL()
    }
    shaders[SHADER_DEFAULT]->unbind();
    
-	glm::mat4 MV = glm::lookAt(glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
-	partSys->step(shaders[SHADER_BILLBOARD], MV, getProjectionMatrix());
-
    react();
    
    // Prints instructions for keyboard interaction
@@ -401,7 +409,8 @@ void drawGL()
    sprintf(buff, "Joy (J)            Anguish (A)");
    fontEngine->useFont("caviar", 36);   
    fontEngine->display(glm::vec4(1.0, 0.5, 0.3, 1.0), buff, 0-(fontEngine->getTextWidth(buff)/2), 1-(fontEngine->getTextHeight(buff)));
-   
+
+	feed();
    sharkify();
    
    glUseProgram(0); 

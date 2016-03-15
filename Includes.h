@@ -72,5 +72,6 @@ float happy;
 float sad;
 float decrement = .008;
 float sAlpha;
+float foodLife;
 
 #endif

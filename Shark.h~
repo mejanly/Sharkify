@@ -42,7 +42,7 @@ public:
    glm::vec3 loc;
    
    void update();
-	void feed();
+	void feed():
     
 private:
    vector<tinyobj::material_t> materials;
