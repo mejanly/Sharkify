@@ -9,7 +9,7 @@ void window_size_callback(GLFWwindow* window, int w, int h){
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
    // Simple text/user interaction - prints faces
-	if (key == GLFW_KEY_J && action == GLFW_PRESS) {
+	if (key == GLFW_KEY_F && action == GLFW_PRESS) {
 	   happy = 1.0;
 		foodLife = 3.0;
 		for(std::vector<Shark *>::iterator s = sharks.begin(); s != sharks.end(); ++s) {
@@ -17,7 +17,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		}
 	   sound->playCorrectSound();
 	}
-	if (key == GLFW_KEY_A && action == GLFW_PRESS) {
+	if (key == GLFW_KEY_K && action == GLFW_PRESS) {
 	   sad = 1.0;
 	   sound->playIncorrectSound();
 	}
@@ -342,7 +342,7 @@ void drawBackground() {
 
 void react() {
    // Prints happy or sad smiley faces in the center of the screen
-   fontEngine->useFont("oswald", 36);   
+   /*fontEngine->useFont("oswald", 36);   
    if (happy > 0) {
       char buff[5];
       sprintf(buff, ":)");
@@ -354,7 +354,7 @@ void react() {
       sprintf(buff, ":("); 
       fontEngine->display(glm::vec4(0.0, 0.3, 0.9, sad), buff, (fontEngine->getTextWidth(buff)/2), 1-sad);
       sad -= decrement;      
-   }
+   }*/
 }
 
 void feed() {
@@ -399,7 +399,7 @@ void drawGL()
    // Draw shark
    for(std::vector<Shark *>::iterator s = sharks.begin(); s != sharks.end(); ++s) {
       drawShark(*s);
-      (*s)->update();
+      (*s)->update(foodLife);
    }
    shaders[SHADER_DEFAULT]->unbind();
    
@@ -407,9 +407,9 @@ void drawGL()
    
    // Prints instructions for keyboard interaction
    char buff[25];
-   sprintf(buff, "Joy (J)            Anguish (A)");
+   sprintf(buff, "Feed (F)         Kill (K)");
    fontEngine->useFont("caviar", 36);   
-   fontEngine->display(glm::vec4(1.0, 0.5, 0.3, 1.0), buff, 0-(fontEngine->getTextWidth(buff)/2), 1-(fontEngine->getTextHeight(buff)));
+   fontEngine->display(glm::vec4(1.0, 0.5, 0.3, 1.0), buff, 0-(fontEngine->getTextWidth(buff)/2)-.02, 1-(fontEngine->getTextHeight(buff)));
 
 	feed();
    sharkify();

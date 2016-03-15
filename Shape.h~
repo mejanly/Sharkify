@@ -17,6 +17,11 @@ class Shape {
 		Shape(vector<tinyobj::material_t> _materials) {materials = _materials;}
 		~Shape(){}
 
+		glm::vec3 loc;
+		glm::vec3 direction;
+		float speed;
+		
+		void explodeStats(glm::vec3 old);
 		void loadShapes(const string &objFile);
 		void initObj();
 		GLuint gPos() {return posBufObj;}
@@ -31,6 +36,7 @@ class Shape {
 	   GLuint norBufObj;
 	   GLuint indBufObj;
 	   
+		float randFloat(float l, float h);
 	   void resize_obj();
 };
 #endif

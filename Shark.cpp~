@@ -68,7 +68,7 @@ Shark::Shark() {
    bbFin->initObj();
 }
 
-void Shark::update() {
+void Shark::update(float isFeed) {
    // Increment the variable that determines the speed of the rotations
    theta += thetaAdd;
    
@@ -79,16 +79,16 @@ void Shark::update() {
 	rbAngle = cos(theta)*10;
 	tfAngle = cos(theta)*13;
 
-	/*if (isFeed > 0.0) {
+	if (isFeed > 0.0) {
 		lhAngle = cos(theta)*7;
 		isFeed -= .005;
-	}*/
+	}
 
    // Moves the shark in the x direction (traveling across the screen)
    loc = glm::vec3(loc.x-speed, loc.y, loc.z);
 }
 
 void Shark::feed() {
-	thetaAdd *= 3;
-	speed *= 3;
+	thetaAdd *= 2.5;
+	speed *= 2.5;
 }

@@ -8,7 +8,7 @@ ParticleSystem::ParticleSystem(GLuint _ShadeProg, GLuint _partTex) {
    t0_disp = 0.0f;
    t_disp = 0.0f;
 	h = 1.0f;
-	g = glm::vec3(0.0f, -0.0001f, 0.0f);
+	g = glm::vec3(0.0f, -0.01f, 0.0f);
 }
 
 ParticleSystem::~ParticleSystem() {
@@ -30,14 +30,12 @@ void ParticleSystem::init(Program* prog) {
       Particle* particle = new Particle();
       particle->load();
       particle->setTexture(partTex);
-      particle->setStartPos(glm::vec3(randFloat(-3.0f, 3.0f), randFloat(2.4f, 4.0f), randFloat(-3.0f, 0.0f)));
+      particle->setStartPos(glm::vec3(randFloat(-3.0f, 3.0f), randFloat(1.0f, 2.2f), randFloat(-3.0f, 0.0f)));
       particle->setStartVel(glm::vec3(0.0f, 0.0f, 0.0f));
       particle->setStartCol(glm::vec3(1.0f, 0.0f, 0.0f));
       particle->setStartTTL(1000.0f);
-      //particle->startTime = randFloat(0.0f, 20.0f);
       particle->setStartOpacity(0.8f);
       particle->setOpacityTaper(false);
-      //particle->setUpdateFunc(&foodFunc);
       foodParticles.push_back(particle);
       
       foodParticles[i]->init(prog);

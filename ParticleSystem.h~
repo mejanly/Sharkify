@@ -5,10 +5,11 @@
 #include "Particle.h"
 #include "Program.h"
 #include "MatrixStack.h"
+#include "ParticleSorter.h"
 
 #define NUM_FOOD 1
 #define NUM_FOOD_PARTICLES 30
-#define FOOD_TTL 35.0f 
+#define FOOD_TTL 1.0f 
 
 using namespace std;
 

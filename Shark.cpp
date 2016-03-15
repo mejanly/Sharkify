@@ -89,6 +89,6 @@ void Shark::update(float isFeed) {
 }
 
 void Shark::feed() {
-	thetaAdd *= 3;
-	speed *= 3;
+	thetaAdd *= 2.5;
+	speed *= 2.5;
 }

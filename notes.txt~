@@ -4,6 +4,3 @@ sharks that enter whose jaws are moving also swim faster.
 Particles take a long time to respawn. Find out why.
 
 Need to implement explosion.
-	Consider: In shape, store the translation value for each piece used in the hierarchical modeling.
-				 Once exploded, store that value and the move that way + the direction along a vector....
-				 Or something??

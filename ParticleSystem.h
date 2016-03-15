@@ -9,7 +9,7 @@
 
 #define NUM_FOOD 1
 #define NUM_FOOD_PARTICLES 30
-#define FOOD_TTL 35.0f 
+#define FOOD_TTL 50.0f 
 
 using namespace std;
 

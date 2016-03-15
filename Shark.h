@@ -45,6 +45,7 @@ public:
    
    void update(float isFeed);
 	void feed();
+	void explode();
     
 private:
    vector<tinyobj::material_t> materials;
