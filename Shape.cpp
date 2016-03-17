@@ -21,7 +21,7 @@ void Shape::genExplodeVars() {
 	xrot = rand() % 360 + 1;
 	yrot = rand() % 360 + 1;
 	zrot = rand() % 360 + 1;
-	rotspeed = rand() % 120 + 1;
+	rotspeed = rand() % 20 + 1;
 }
 
 glm::vec3 Shape::updateTrans() {

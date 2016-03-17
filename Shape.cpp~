@@ -16,7 +16,7 @@ float Shape::randFloat(float l, float h) {
 
 void Shape::genExplodeVars() {
 	explodeVec = glm::vec3(randFloat(-10.0f, 10.0f), randFloat(-10.0f, 10.0f), randFloat(-0.0f, 0.0f));
-	velocity = randFloat(-0.2f, 0.2f);
+	velocity = randFloat(-0.3f, 0.3f);
 	exploding = true;
 	xrot = rand() % 360 + 1;
 	yrot = rand() % 360 + 1;
