@@ -1,5 +1,39 @@
 #include "Shape.h"
 
+Shape::Shape(vector<tinyobj::material_t> _materials) {
+	materials = _materials; 
+	exploding = false;
+	xrot = 0;
+	yrot = 0;
+	zrot = 0;
+	rotspeed = 0;
+}
+
+float Shape::randFloat(float l, float h) {
+   float r = rand() / (float)RAND_MAX;
+   return (1.0f - r) * l + r * h;
+}
+
+void Shape::genExplodeVars() {
+	explodeVec = glm::vec3(randFloat(-10.0f, 10.0f), randFloat(-10.0f, 10.0f), randFloat(-0.0f, 0.0f));
+	velocity = randFloat(-0.2f, 0.2f);
+	exploding = true;
+	xrot = rand() % 360 + 1;
+	yrot = rand() % 360 + 1;
+	zrot = rand() % 360 + 1;
+	rotspeed = rand() % 120 + 1;
+}
+
+glm::vec3 Shape::updateTrans() {
+	if (exploding) {
+		transVec += explodeVec * velocity;
+		xrot += rotspeed;
+		yrot += rotspeed;
+		zrot += rotspeed;
+	}
+	return transVec;	
+}
+
 void Shape::loadShapes(const string &objFile) {
 	string err = tinyobj::LoadObj(shapes, materials, objFile.c_str());
 	if(!err.empty()) {

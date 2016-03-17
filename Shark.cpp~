@@ -86,11 +86,11 @@ void Shark::update(float isFeed) {
 	if (isFeed > 0.0) {
 		lhAngle = cos(theta)*7;
 		isFeed -= .005;
-		hdAngle = -cos(theta*2)*5;
-		fbAngle = -cos(theta*2)*4;	
-		mbAngle = cos(theta*2)*7;
-		rbAngle = cos(theta*2)*10;
-		tfAngle = cos(theta*2)*13;
+		hdAngle = -cos(theta*3)*5;
+		fbAngle = -cos(theta*3)*4;	
+		mbAngle = cos(theta*3)*7;
+		rbAngle = cos(theta*3)*10;
+		tfAngle = cos(theta*3)*13;
 	}
 	else {
 		lhAngle = 0.0;
@@ -103,4 +103,17 @@ void Shark::update(float isFeed) {
 
    // Moves the shark in the x direction (traveling across the screen)
    loc = glm::vec3(loc.x-speed, loc.y, loc.z);
+}
+
+void Shark::explode() {
+	uHead->genExplodeVars();
+   lHead->genExplodeVars();
+   lsFin->genExplodeVars();
+   rsFin->genExplodeVars();
+   tbFin->genExplodeVars();
+   fBody->genExplodeVars();
+   mBody->genExplodeVars();
+   rBody->genExplodeVars();
+   btFin->genExplodeVars();
+   bbFin->genExplodeVars();
 }

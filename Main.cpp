@@ -16,7 +16,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	}
 	if (key == GLFW_KEY_K && action == GLFW_PRESS) {
 	   sad = 1.0;
-	   sound->playIncorrectSound();
+		for(std::vector<Shark *>::iterator s = sharks.begin(); s != sharks.end(); ++s) {
+		   (*s)->explode();
+		}
+	   sound->playGrenadeSound();
 	}
 	if (key == GLFW_KEY_S && action == GLFW_PRESS) {
 	   for (int i = 0; i < 3; i++) {
@@ -243,72 +246,102 @@ void drawShark(Shark *s) {
    // Roll whole shark
 	ModelTrans.rotate(0, glm::vec3(1, 0, 0));
 	// Putting this here rotates shark around middle 
-	ModelTrans.translate(s->loc); 
+	ModelTrans.translate(s->loc+s->fBody->updateTrans()); 
 	ModelTrans.rotate(s->fbAngle+s->yRot, glm::vec3(0, 1, 0));
 	ModelTrans.pushMatrix();
+	ModelTrans.rotate(s->fBody->xrot, glm::vec3(1, 0, 0));
+	ModelTrans.rotate(s->fBody->yrot, glm::vec3(0, 1, 0));
+	ModelTrans.rotate(s->fBody->zrot, glm::vec3(0, 0, 1));
 	ModelTrans.scale(.28);
 	drawSharkPiece(s->fBody);
 	ModelTrans.popMatrix();
 	// RIGHT FIN
-	ModelTrans.translate(s->rsFin->transVec);//glm::vec3(.06, -.23, -.39));
+	ModelTrans.translate(s->rsFin->updateTrans());//glm::vec3(.06, -.23, -.39));
 	ModelTrans.pushMatrix();
+	ModelTrans.rotate(s->rsFin->xrot, glm::vec3(1, 0, 0));
+	ModelTrans.rotate(s->rsFin->yrot, glm::vec3(0, 1, 0));
+	ModelTrans.rotate(s->rsFin->zrot, glm::vec3(0, 0, 1));
 	ModelTrans.scale(.28);
 	drawSharkPiece(s->rsFin);
 	ModelTrans.popMatrix();
 	// LEFT FIN
-   ModelTrans.translate(s->lsFin->transVec);//glm::vec3(0, 0, .78));
+   ModelTrans.translate(s->lsFin->updateTrans());//glm::vec3(0, 0, .78));
 	ModelTrans.pushMatrix();
+	ModelTrans.rotate(s->lsFin->xrot, glm::vec3(1, 0, 0));
+	ModelTrans.rotate(s->lsFin->yrot, glm::vec3(0, 1, 0));
+	ModelTrans.rotate(s->lsFin->zrot, glm::vec3(0, 0, 1));
 	ModelTrans.scale(.28);
 	drawSharkPiece(s->lsFin);
 	ModelTrans.popMatrix();
 	// LOWER HEAD
-	ModelTrans.translate(s->lHead->transVec);//glm::vec3(-.45, .215, -.39));
+	ModelTrans.translate(s->lHead->updateTrans());//glm::vec3(-.45, .215, -.39));
 	ModelTrans.rotate(s->hdAngle, glm::vec3(0, 1, 0));
 	ModelTrans.pushMatrix();
+	ModelTrans.rotate(s->lHead->xrot, glm::vec3(1, 0, 0));
+	ModelTrans.rotate(s->lHead->yrot, glm::vec3(0, 1, 0));
+	ModelTrans.rotate(s->lHead->zrot, glm::vec3(0, 0, 1));
 	ModelTrans.rotate(s->lhAngle, glm::vec3(0, 0, 1));
 	ModelTrans.scale(.26);
 	drawSharkPiece(s->lHead);
 	ModelTrans.popMatrix();
 	// UPPER HEAD
-	ModelTrans.translate(s->uHead->transVec);//glm::vec3(-.23, .03, 0));
+	ModelTrans.translate(s->uHead->updateTrans());//glm::vec3(-.23, .03, 0));
 	ModelTrans.pushMatrix();
+	ModelTrans.rotate(s->uHead->xrot, glm::vec3(1, 0, 0));
+	ModelTrans.rotate(s->uHead->yrot, glm::vec3(0, 1, 0));
+	ModelTrans.rotate(s->uHead->zrot, glm::vec3(0, 0, 1));
 	ModelTrans.scale(.24);
 	drawSharkPiece(s->uHead);
 	ModelTrans.popMatrix();
    
 	// MID BODY
-	ModelTrans.translate(s->mBody->transVec);//glm::vec3(.6, -.03, 0));
+	ModelTrans.translate(s->mBody->updateTrans());//glm::vec3(.6, -.03, 0));
 	ModelTrans.rotate(s->mbAngle, glm::vec3(0, 1, 0));
 	ModelTrans.translate(glm::vec3(.6, 0, 0));
-	ModelTrans.pushMatrix();     
+	ModelTrans.pushMatrix();
+	ModelTrans.rotate(s->mBody->xrot, glm::vec3(1, 0, 0));
+	ModelTrans.rotate(s->mBody->yrot, glm::vec3(0, 1, 0));
+	ModelTrans.rotate(s->mBody->zrot, glm::vec3(0, 0, 1));   
 	ModelTrans.scale(.38);
 	drawSharkPiece(s->mBody);
 	ModelTrans.popMatrix();
 	// TOP FIN
-	ModelTrans.translate(s->tbFin->transVec);//glm::vec3(-.15, .4, 0));
+	ModelTrans.translate(s->tbFin->updateTrans());//glm::vec3(-.15, .4, 0));
 	ModelTrans.pushMatrix();
+	ModelTrans.rotate(s->tbFin->xrot, glm::vec3(1, 0, 0));
+	ModelTrans.rotate(s->tbFin->yrot, glm::vec3(0, 1, 0));
+	ModelTrans.rotate(s->tbFin->zrot, glm::vec3(0, 0, 1));
 	ModelTrans.scale(.2);
 	drawSharkPiece(s->tbFin);
 	ModelTrans.popMatrix();
 	// REAR BODY
-	ModelTrans.translate(s->rBody->transVec);//glm::vec3(.41, -.38, 0));
+	ModelTrans.translate(s->rBody->updateTrans());//glm::vec3(.41, -.38, 0));
 	ModelTrans.rotate(s->rbAngle, glm::vec3(0, 1, 0));
 	ModelTrans.translate(glm::vec3(.41, 0, 0));
 	ModelTrans.pushMatrix();
+	ModelTrans.rotate(s->rBody->xrot, glm::vec3(1, 0, 0));
+	ModelTrans.rotate(s->rBody->yrot, glm::vec3(0, 1, 0));
+	ModelTrans.rotate(s->rBody->zrot, glm::vec3(0, 0, 1));
 	ModelTrans.scale(.32);
 	drawSharkPiece(s->rBody);
 	ModelTrans.popMatrix();
 	// BACK TOP FIN
-	ModelTrans.translate(s->btFin->transVec);//glm::vec3(.27, .16, 0));
+	ModelTrans.translate(s->btFin->updateTrans());//glm::vec3(.27, .16, 0));
 	ModelTrans.rotate(s->tfAngle, glm::vec3(0, 1, 0));
 	ModelTrans.translate(glm::vec3(.3, 0, 0));
 	ModelTrans.pushMatrix();
+	ModelTrans.rotate(s->btFin->xrot, glm::vec3(1, 0, 0));
+	ModelTrans.rotate(s->btFin->yrot, glm::vec3(0, 1, 0));
+	ModelTrans.rotate(s->btFin->zrot, glm::vec3(0, 0, 1));
 	ModelTrans.scale(.26);
 	drawSharkPiece(s->btFin);
 	ModelTrans.popMatrix();
 	// BACK BOTTOM FIN
-	ModelTrans.translate(s->bbFin->transVec);//glm::vec3(-.01, -.43, 0));
+	ModelTrans.translate(s->bbFin->updateTrans());//glm::vec3(-.01, -.43, 0));
 	ModelTrans.pushMatrix();
+	ModelTrans.rotate(s->bbFin->xrot, glm::vec3(1, 0, 0));
+	ModelTrans.rotate(s->bbFin->yrot, glm::vec3(0, 1, 0));
+	ModelTrans.rotate(s->bbFin->zrot, glm::vec3(0, 0, 1));
 	ModelTrans.scale(.26);
 	drawSharkPiece(s->bbFin);
 	ModelTrans.popMatrix();

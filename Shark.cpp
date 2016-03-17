@@ -104,3 +104,18 @@ void Shark::update(float isFeed) {
    // Moves the shark in the x direction (traveling across the screen)
    loc = glm::vec3(loc.x-speed, loc.y, loc.z);
 }
+
+void Shark::explode() {
+	uHead->genExplodeVars();
+   lHead->genExplodeVars();
+   lsFin->genExplodeVars();
+   rsFin->genExplodeVars();
+   tbFin->genExplodeVars();
+   fBody->genExplodeVars();
+   mBody->genExplodeVars();
+   rBody->genExplodeVars();
+   btFin->genExplodeVars();
+   bbFin->genExplodeVars();
+
+	thetaAdd = 0.0;
+}

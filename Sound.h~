@@ -30,7 +30,7 @@ public:
     
     void playContactSound();
     void playBuzzerSound();
-    void playGrenadeSound();
+    void playThwackSound();
     void playSplatSound();
     void playJumpSound();
     void playCorrectSound();

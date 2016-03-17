@@ -14,10 +14,17 @@ using namespace std;
 
 class Shape {
 	public:
-		Shape(vector<tinyobj::material_t> _materials) {materials = _materials;}
+		Shape(vector<tinyobj::material_t> _materials){};
 		~Shape(){}
 
 		glm::vec3 transVec;
+		glm::vec3 explodeVec;
+		float velocity;
+		bool exploding;
+		int xrot;
+		int yrot;
+		int zrot;
+		int rotspeed;
 
 		void loadShapes(const string &objFile);
 		void initObj();
@@ -25,6 +32,9 @@ class Shape {
 		GLuint gNor() {return norBufObj;}
 		GLuint gInd() {return indBufObj;}	
 		std::vector<tinyobj::shape_t> gShapes() {return shapes;}	
+		void setTransVec(glm::vec3 _transVec) { transVec = _transVec; }
+		glm::vec3 updateTrans();
+		void genExplodeVars();	
 		
 	private:
 	   std::vector<tinyobj::shape_t> shapes;
@@ -34,5 +44,6 @@ class Shape {
 	   GLuint indBufObj;
 	   
 	   void resize_obj();
+		float randFloat(float l, float h);
 };
 #endif
