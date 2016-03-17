@@ -21,8 +21,6 @@ Shark::Shark() {
    theta = 0.0 + (float)(rand() % 360 + 1);
    // Abritrary number for approximately smooth swimming animation
    thetaAdd = 2.25*speed;
-
-	printf("%lf %lf %lf\n", speed, theta, thetaAdd);
    
    // Rotates the shark around the Y based on which direction
    // it is facing
@@ -84,18 +82,23 @@ void Shark::update(float isFeed) {
    theta += thetaAdd;
    
    // More aribtrary number to determine how far each piece rotates
-   hdAngle = -cos(theta)*5;//*3;
-	fbAngle = -cos(theta)*4;
-	mbAngle = cos(theta)*7;
-	rbAngle = cos(theta)*10;
-	tfAngle = cos(theta)*13;
 
 	if (isFeed > 0.0) {
 		lhAngle = cos(theta)*7;
 		isFeed -= .005;
+		hdAngle = -cos(theta*2)*5;
+		fbAngle = -cos(theta*2)*4;	
+		mbAngle = cos(theta*2)*7;
+		rbAngle = cos(theta*2)*10;
+		tfAngle = cos(theta*2)*13;
 	}
 	else {
 		lhAngle = 0.0;
+		hdAngle = -cos(theta)*5;
+		fbAngle = -cos(theta)*4;
+		mbAngle = cos(theta)*7;
+		rbAngle = cos(theta)*10;
+		tfAngle = cos(theta)*13;
 	}
 
    // Moves the shark in the x direction (traveling across the screen)

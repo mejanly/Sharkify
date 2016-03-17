@@ -82,18 +82,23 @@ void Shark::update(float isFeed) {
    theta += thetaAdd;
    
    // More aribtrary number to determine how far each piece rotates
-   hdAngle = -cos(theta)*5;//*3;
-	fbAngle = -cos(theta)*4;
-	mbAngle = cos(theta)*7;
-	rbAngle = cos(theta)*10;
-	tfAngle = cos(theta)*13;
 
 	if (isFeed > 0.0) {
 		lhAngle = cos(theta)*7;
 		isFeed -= .005;
+		hdAngle = -cos(theta*3)*5;
+		fbAngle = -cos(theta*3)*4;	
+		mbAngle = cos(theta*3)*7;
+		rbAngle = cos(theta*3)*10;
+		tfAngle = cos(theta*3)*13;
 	}
 	else {
 		lhAngle = 0.0;
+		hdAngle = -cos(theta)*5;
+		fbAngle = -cos(theta)*4;
+		mbAngle = cos(theta)*7;
+		rbAngle = cos(theta)*10;
+		tfAngle = cos(theta)*13;
 	}
 
    // Moves the shark in the x direction (traveling across the screen)
