@@ -1,18 +1,5 @@
 #include "Shape.h"
 
-float Shape::randFloat(float l, float h)
-{
-   float r = rand() / (float)RAND_MAX;
-   return (1.0f - r) * l + r * h;
-}
-
-void Shape::explodeStats(glm::vec3 old) {
-	loc = old;
-	
-	direction = glm::vec3(randFloat(-10.0f, 10.0f), randFloat(-10.0f, -10.0f), 0.0f);
-	speed = randFloat(3.0f, 5.0f);
-}
-
 void Shape::loadShapes(const string &objFile) {
 	string err = tinyobj::LoadObj(shapes, materials, objFile.c_str());
 	if(!err.empty()) {

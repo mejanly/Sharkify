@@ -11,10 +11,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
    // Simple text/user interaction - prints faces
 	if (key == GLFW_KEY_F && action == GLFW_PRESS) {
 	   happy = 1.0;
-		foodLife = 3.0;
-		for(std::vector<Shark *>::iterator s = sharks.begin(); s != sharks.end(); ++s) {
-			(*s)->feed();
-		}
+		foodLife = 3.2;
 	   sound->playCorrectSound();
 	}
 	if (key == GLFW_KEY_K && action == GLFW_PRESS) {
@@ -363,6 +360,9 @@ void feed() {
 		partSys->step(shaders[SHADER_BILLBOARD], MV, getProjectionMatrix());
 		foodLife -= decrement;
 	}
+	else {
+		partSys->init(shaders[SHADER_BILLBOARD]);
+	}
 }
 
 void sharkify() {
@@ -409,7 +409,7 @@ void drawGL()
    char buff[25];
    sprintf(buff, "Feed (F)         Kill (K)");
    fontEngine->useFont("caviar", 36);   
-   fontEngine->display(glm::vec4(1.0, 0.5, 0.3, 1.0), buff, 0-(fontEngine->getTextWidth(buff)/2)-.02, 1-(fontEngine->getTextHeight(buff)));
+   fontEngine->display(glm::vec4(1.0, 0.5, 0.3, 1.0), buff, 0-(fontEngine->getTextWidth(buff)/2), 1-(fontEngine->getTextHeight(buff)));
 
 	feed();
    sharkify();

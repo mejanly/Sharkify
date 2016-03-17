@@ -43,8 +43,11 @@ public:
    // Shark's location
    glm::vec3 loc;
    
+	
+	void setTransVec(glm::vec3 _transVec) { transVec = _transVec; }
+	transVec = _trans
    void update(float isFeed);
-	void feed();
+	void explode();
     
 private:
    vector<tinyobj::material_t> materials;

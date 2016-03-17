@@ -11,10 +11,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
    // Simple text/user interaction - prints faces
 	if (key == GLFW_KEY_F && action == GLFW_PRESS) {
 	   happy = 1.0;
-		foodLife = 3.0;
-		for(std::vector<Shark *>::iterator s = sharks.begin(); s != sharks.end(); ++s) {
-			(*s)->feed();
-		}
+		foodLife = 3.2;
 	   sound->playCorrectSound();
 	}
 	if (key == GLFW_KEY_K && action == GLFW_PRESS) {
@@ -253,19 +250,19 @@ void drawShark(Shark *s) {
 	drawSharkPiece(s->fBody);
 	ModelTrans.popMatrix();
 	// RIGHT FIN
-	ModelTrans.translate(glm::vec3(.06, -.23, -.39));
+	ModelTrans.translate(s->rsFin->transVec);//glm::vec3(.06, -.23, -.39));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.28);
 	drawSharkPiece(s->rsFin);
 	ModelTrans.popMatrix();
 	// LEFT FIN
-   ModelTrans.translate(glm::vec3(0, 0, .78));
+   ModelTrans.translate(s->lsFin->transVec);//glm::vec3(0, 0, .78));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.28);
 	drawSharkPiece(s->lsFin);
 	ModelTrans.popMatrix();
 	// LOWER HEAD
-	ModelTrans.translate(glm::vec3(-.45, .215, -.39));
+	ModelTrans.translate(s->lHead->transVec);//glm::vec3(-.45, .215, -.39));
 	ModelTrans.rotate(s->hdAngle, glm::vec3(0, 1, 0));
 	ModelTrans.pushMatrix();
 	ModelTrans.rotate(s->lhAngle, glm::vec3(0, 0, 1));
@@ -273,14 +270,14 @@ void drawShark(Shark *s) {
 	drawSharkPiece(s->lHead);
 	ModelTrans.popMatrix();
 	// UPPER HEAD
-	ModelTrans.translate(glm::vec3(-.23, .03, 0));
+	ModelTrans.translate(s->uHead->transVec);//glm::vec3(-.23, .03, 0));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.24);
 	drawSharkPiece(s->uHead);
 	ModelTrans.popMatrix();
    
 	// MID BODY
-	ModelTrans.translate(glm::vec3(.6, -.03, 0));
+	ModelTrans.translate(s->mBody->transVec);//glm::vec3(.6, -.03, 0));
 	ModelTrans.rotate(s->mbAngle, glm::vec3(0, 1, 0));
 	ModelTrans.translate(glm::vec3(.6, 0, 0));
 	ModelTrans.pushMatrix();     
@@ -288,13 +285,13 @@ void drawShark(Shark *s) {
 	drawSharkPiece(s->mBody);
 	ModelTrans.popMatrix();
 	// TOP FIN
-	ModelTrans.translate(glm::vec3(-.15, .4, 0));
+	ModelTrans.translate(s->tbFin->transVec);//glm::vec3(-.15, .4, 0));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.2);
 	drawSharkPiece(s->tbFin);
 	ModelTrans.popMatrix();
 	// REAR BODY
-	ModelTrans.translate(glm::vec3(.41, -.38, 0));
+	ModelTrans.translate(s->rBody->transVec);//glm::vec3(.41, -.38, 0));
 	ModelTrans.rotate(s->rbAngle, glm::vec3(0, 1, 0));
 	ModelTrans.translate(glm::vec3(.41, 0, 0));
 	ModelTrans.pushMatrix();
@@ -302,7 +299,7 @@ void drawShark(Shark *s) {
 	drawSharkPiece(s->rBody);
 	ModelTrans.popMatrix();
 	// BACK TOP FIN
-	ModelTrans.translate(glm::vec3(.27, .16, 0));
+	ModelTrans.translate(s->btFin->transVec);//glm::vec3(.27, .16, 0));
 	ModelTrans.rotate(s->tfAngle, glm::vec3(0, 1, 0));
 	ModelTrans.translate(glm::vec3(.3, 0, 0));
 	ModelTrans.pushMatrix();
@@ -310,7 +307,7 @@ void drawShark(Shark *s) {
 	drawSharkPiece(s->btFin);
 	ModelTrans.popMatrix();
 	// BACK BOTTOM FIN
-	ModelTrans.translate(glm::vec3(-.01, -.43, 0));
+	ModelTrans.translate(s->bbFin->transVec);//glm::vec3(-.01, -.43, 0));
 	ModelTrans.pushMatrix();
 	ModelTrans.scale(.26);
 	drawSharkPiece(s->bbFin);
@@ -362,6 +359,9 @@ void feed() {
 		glm::mat4 MV = glm::lookAt(glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));   
 		partSys->step(shaders[SHADER_BILLBOARD], MV, getProjectionMatrix());
 		foodLife -= decrement;
+	}
+	else {
+		partSys->init(shaders[SHADER_BILLBOARD]);
 	}
 }
 

@@ -21,8 +21,6 @@ Shark::Shark() {
    theta = 0.0 + (float)(rand() % 360 + 1);
    // Abritrary number for approximately smooth swimming animation
    thetaAdd = 2.25*speed;
-
-	printf("%lf %lf %lf\n", speed, theta, thetaAdd);
    
    // Rotates the shark around the Y based on which direction
    // it is facing
@@ -66,6 +64,17 @@ Shark::Shark() {
    rBody->initObj();
    btFin->initObj();
    bbFin->initObj();
+
+	uHead->setTransVec(glm::vec3(-.23, .03, 0));
+   lHead->setTransVec(glm::vec3(-.45, .215, -.39));
+   lsFin->setTransVec(glm::vec3(0, 0, .78));
+   rsFin->setTransVec(glm::vec3(.06, -.23, -.39));
+   tbFin->setTransVec(glm::vec3(-.15, .4, 0));
+   fBody->setTransVec(glm::vec3(0.0, 0.0, 0.0));
+   mBody->setTransVec(glm::vec3(.6, -.03, 0));
+   rBody->setTransVec(glm::vec3(.41, -.38, 0));
+   btFin->setTransVec(glm::vec3(.27, .16, 0));
+   bbFin->setTransVec(glm::vec3(-.01, -.43, 0));
 }
 
 void Shark::update(float isFeed) {
@@ -83,12 +92,10 @@ void Shark::update(float isFeed) {
 		lhAngle = cos(theta)*7;
 		isFeed -= .005;
 	}
+	else {
+		lhAngle = 0.0;
+	}
 
    // Moves the shark in the x direction (traveling across the screen)
    loc = glm::vec3(loc.x-speed, loc.y, loc.z);
-}
-
-void Shark::feed() {
-	thetaAdd *= 2.5;
-	speed *= 2.5;
 }

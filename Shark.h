@@ -43,8 +43,7 @@ public:
    // Shark's location
    glm::vec3 loc;
    
-   void update(float isFeed);
-	void feed();
+	void update(float isFeed);
 	void explode();
     
 private:

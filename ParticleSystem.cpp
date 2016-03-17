@@ -33,7 +33,7 @@ void ParticleSystem::init(Program* prog) {
       particle->setStartPos(glm::vec3(randFloat(-3.0f, 3.0f), randFloat(1.0f, 2.2f), randFloat(-3.0f, 0.0f)));
       particle->setStartVel(glm::vec3(0.0f, 0.0f, 0.0f));
       particle->setStartCol(glm::vec3(1.0f, 0.0f, 0.0f));
-      particle->setStartTTL(1000.0f);
+      particle->setStartTTL(475.0f);
       particle->setStartOpacity(0.8f);
       particle->setOpacityTaper(false);
       foodParticles.push_back(particle);
